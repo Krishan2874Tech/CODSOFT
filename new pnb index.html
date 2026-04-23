@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PNB Cybersecurity Hackathon 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+:root {
+  --red-dark:#8B0000;--red-mid:#c0392b;--red-light:#e74c3c;
+  --gold:#f0a500;--gold-light:#f5c842;--amber:#ffb300;
+  --bg-gradient:linear-gradient(135deg,#0a0a1a 0%,#0d1b2a 30%,#1a1a2e 60%,#16213e 100%);
+  --sidebar-bg:linear-gradient(180deg,#000000 0%,#111111 50%,#0a0a0a 100%);
+  --card-bg:rgba(255,255,255,0.12);--card-border:rgba(255,200,100,0.3);
+  --btn-gold:linear-gradient(135deg,#f0a500,#f5c842);
+  --tab-active:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg-gradient);min-height:100vh;overflow-x:hidden;}
+
+/* ── KEYFRAME ANIMATIONS ── */
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,165,0,0.5)}50%{box-shadow:0 0 0 10px rgba(240,165,0,0)}}
+@keyframes glow{0%,100%{text-shadow:0 0 8px rgba(240,165,0,0.4)}50%{text-shadow:0 0 22px rgba(240,165,0,0.9),0 0 40px rgba(240,165,0,0.4)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes badgeSpin{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.08)}}
+@keyframes scanLine{0%{top:0}100%{top:100%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes slideInSidebar{from{transform:translateX(-100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes countUp{from{opacity:0;transform:scale(0.5)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes borderPulse{0%,100%{border-color:rgba(255,200,100,0.3)}50%{border-color:rgba(255,200,100,0.9)}}
+@keyframes rowSlideIn{from{opacity:0;transform:translateX(-15px)}to{opacity:1;transform:translateX(0)}}
+@keyframes floatUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes progressFill{from{width:0}to{width:var(--target-width,100%)}}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:0.6}}
+@keyframes networkPulse{0%,100%{r:14}50%{r:18}}
+
+/* ── LAYOUT ── */
+.app{display:flex;flex-direction:column;min-height:100vh;}
+
+/* TOP BAR */
+.topbar{background:transparent;padding:6px 20px 0;display:flex;justify-content:flex-end;align-items:center;gap:10px;font-size:14px;color:#fff;animation:fadeInDown .5s ease;}
+.topbar span{cursor:pointer;opacity:.7;transition:opacity .2s,transform .2s;}
+.topbar span:hover{opacity:1;transform:scale(1.2);}
+
+/* HEADER */
+.header{background:linear-gradient(90deg,#000000 0%,#0d1b2a 40%,#1a1a2e 80%,#16213e 100%);display:flex;align-items:center;justify-content:space-between;padding:8px 20px;border-bottom:2px solid rgba(240,165,0,0.4);animation:fadeInDown .6s ease;gap:14px;}
+.header-logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+/* Site Logo */
+.site-logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#0d1b2a,#1a1a2e);border:2px solid var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0;}
+.logo-icon::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,165,0,0.15),transparent);border-radius:8px;}
+.logo-shield{font-size:22px;position:relative;z-index:1;}
+.logo-text{display:flex;flex-direction:column;line-height:1.1;}
+.logo-text-main{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;color:var(--gold-light);letter-spacing:1px;}
+.logo-text-sub{font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;}
+/* Navbar search */
+.nav-search-wrap{flex:1;max-width:420px;position:relative;}
+.nav-search-input{width:100%;padding:8px 16px 8px 38px;border-radius:20px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,200,100,0.25);color:#fff;font-family:'Rajdhani';font-size:13px;outline:none;transition:border-color .3s,box-shadow .3s,background .3s;}
+.nav-search-input:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(240,165,0,0.25);background:rgba(255,255,255,0.1);}
+.nav-search-input::placeholder{color:rgba(255,255,255,0.35);}
+.nav-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.nav-search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#0d1b2a;border:1px solid rgba(240,165,0,0.3);border-radius:10px;z-index:9000;max-height:320px;overflow-y:auto;display:none;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+.nav-search-results.open{display:block;animation:fadeInDown .2s ease;}
+.search-result-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(255,200,100,0.07);transition:background .15s;display:flex;align-items:center;gap:10px;}
+.search-result-item:hover{background:rgba(240,165,0,0.1);}
+.search-result-item:last-child{border-bottom:none;}
+.sri-icon{font-size:16px;flex-shrink:0;}
+.sri-info{flex:1;}
+.sri-name{font-size:13px;color:#fff;font-weight:600;}
+.sri-meta{font-size:11px;color:rgba(255,255,255,0.45);}
+.sri-badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:700;}
+/* Navbar cert button */
+.btn-nav-cert{padding:8px 16px;background:linear-gradient(135deg,#1a6b3c,#27ae60);border:none;border-radius:20px;color:#fff;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;display:flex;align-items:center;gap:6px;}
+.btn-nav-cert:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(39,174,96,0.5);}
+.header-right{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.header-user{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);animation:glow 3s ease-in-out infinite;white-space:nowrap;}
+.pnb-badge{width:58px;height:58px;background:radial-gradient(circle at 35% 35%,#f5c842,#c8870a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:13px;color:#7a0000;border:3px solid #f5c842;box-shadow:0 0 16px rgba(245,200,66,0.5);position:relative;animation:pulse 2.5s infinite,badgeSpin 4s ease-in-out infinite;}
+.pnb-badge::before{content:'PQC-Ready';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:8px;color:#f5c842;white-space:nowrap;font-family:'Rajdhani';}
+.header-welcome{font-family:'Orbitron',sans-serif;font-size:13px;color:#fff;animation:glow 3s ease-in-out infinite;}
+
+/* BODY */
+.body{display:flex;flex:1;}
+
+/* SIDEBAR */
+.sidebar{width:200px;background:var(--sidebar-bg);padding:10px 0;flex-shrink:0;display:flex;flex-direction:column;box-shadow:4px 0 18px rgba(0,0,0,0.4);animation:slideInSidebar .5s ease;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:12px 18px;color:#fff;cursor:pointer;font-size:14px;font-weight:600;transition:background .2s,transform .2s,border-left-color .2s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.15);border-left-color:var(--gold);transform:translateX(4px);}
+.nav-item.active{background:var(--gold);color:#111;border-left-color:#fff;}
+.nav-item .icon{font-size:16px;transition:transform .3s;}
+.nav-item:hover .icon{transform:scale(1.3) rotate(-5deg);}
+
+/* CONTENT */
+.content{flex:1;padding:16px 20px;overflow-y:auto;}
+
+/* PAGE TITLE */
+.page-title{font-family:'Orbitron',sans-serif;font-size:18px;color:#7a0000;font-weight:700;margin-bottom:14px;animation:fadeInLeft .5s ease;}
+
+/* FOOTER */
+.footer{background:rgba(0,0,0,0.6);display:flex;justify-content:space-between;align-items:center;padding:6px 30px;font-size:11px;color:rgba(255,255,255,0.6);border-top:1px solid rgba(240,165,0,0.3);animation:fadeInUp .5s ease;}
+
+/* PAGES */
+.page{display:none;}.page.active{display:block;animation:fadeIn .4s ease;}
+
+/* ── LOGIN PAGE ── */
+#page-login .login-wrap{display:flex;align-items:stretch;background:linear-gradient(135deg,#0a0a1a,#0d1b2a 40%,#1a1a2e 75%,#16213e);border-radius:12px;overflow:hidden;min-height:420px;box-shadow:0 8px 40px rgba(0,0,0,0.7);max-width:900px;margin:40px auto;animation:scaleIn .6s ease;}
+.login-left{flex:1;padding:40px;display:flex;flex-direction:column;justify-content:center;gap:14px;animation:fadeInLeft .7s ease;}
+.login-left label{color:rgba(255,255,255,0.7);font-size:13px;}
+.login-left input{width:100%;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:6px;color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;transition:border-color .3s,box-shadow .3s;}
+.login-left input:focus{border-color:var(--gold);box-shadow:0 0 10px rgba(240,165,0,0.3);}
+.login-left input::placeholder{color:rgba(255,255,255,0.5);}
+.login-forgot{color:var(--gold-light);font-size:12px;cursor:pointer;text-align:right;transition:opacity .2s;}
+.login-forgot:hover{opacity:.7;}
+.btn-login{width:100%;padding:13px;background:var(--btn-gold);border:none;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#7a0000;cursor:pointer;box-shadow:0 4px 16px rgba(240,165,0,0.4);transition:transform .15s,box-shadow .15s;animation:pulse 2s infinite;}
+.btn-login:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(240,165,0,0.7);}
+.login-right{flex:1.2;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;animation:fadeInRight .7s ease;}
+.hackathon-title{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;color:var(--gold-light);text-shadow:0 2px 16px rgba(240,165,0,0.5);line-height:1.2;animation:glow 3s ease-in-out infinite;}
+.hackathon-collab{color:#fff;font-size:15px;}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" onerror="console.warn('QRCode CDN failed to load')"></script>
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client"></script>
+<script>
+/* ── Minimal self-contained QR Code generator (no CDN needed) ──
+   Uses qrcode-generator by Kazuhiko Arase (MIT) via unpkg fallback,
+   but also provides a pure-canvas pixel renderer as backup.
+   We use the Google Chart API image approach which is the most reliable. */
+function makeQRDataURL(text, size, cb) {
+  // Try Google Chart API — returns a PNG image URL
+  const url = `https://chart.googleapis.com/chart?cht=qr&chs=${size}x${size}&chl=${encodeURIComponent(text)}&chco=f0a500&chf=bg,s,07071a`;
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => cb(null, img);
+  img.onerror = () => {
+    // Fallback: try qrserver.com
+    const url2 = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=f0a500&bgcolor=07071a&margin=4`;
+    const img2 = new Image();
+    img2.crossOrigin = 'anonymous';
+    img2.onload = () => cb(null, img2);
+    img2.onerror = () => cb(new Error('QR failed'), null);
+    img2.src = url2;
+  };
+  img.src = url;
+}
+</script>
+</head>
+<body>
+<div class="app">
+<div class="topbar"><span>☆</span><span>⌂</span><span style="font-size:11px">11/03/2026</span></div>
+<div class="header" id="header" style="display:none;">
+  <!-- Logo -->
+  <div class="header-logo">
+    <div class="site-logo">
+      <div class="logo-icon">
+        <svg class="logo-shield" width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V6L12 2z" fill="rgba(240,165,0,0.2)" stroke="#f0a500" stroke-width="1.5"/>
+          <path d="M9 12l2 2 4-4" stroke="#f5c842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" fill="none" stroke="rgba(240,165,0,0.4)" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="logo-text-main">CyberShield</div>
+        <div class="logo-text-sub">PNB · Hackathon 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Search -->
+  <div class="nav-search-wrap">
+    <span class="nav-search-icon">🔍</span>
+    <input class="nav-search-input" id="global-search" type="text" placeholder="Search assets, domains, IPs, certificates..." oninput="globalSearch(this.value)" onblur="setTimeout(()=>closeSearch(),200)">
+    <div class="nav-search-results" id="search-results"></div>
+  </div>
+
+  <!-- Right side -->
+  <div class="header-right">
+    <button class="btn-nav-cert" onclick="openCertModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V6L12 2z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      Generate Certificate
+    </button>
+
+    <!-- User dropdown -->
+    <div style="position:relative;" id="user-menu-wrap">
+      <div class="header-user" id="user-menu-trigger" onclick="toggleUserMenu()" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:20px;border:1px solid rgba(255,200,100,0.2);transition:background .2s;" onmouseover="this.style.background='rgba(255,200,100,0.08)'" onmouseout="this.style.background='transparent'">
+        <span id="user-avatar-wrap">👤</span>
+        <span id="user-display-name">hackathon_user</span>
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" id="user-chevron" style="transition:transform .2s;opacity:.6"><path d="M2 3.5L5 6.5L8 3.5" stroke="#f0a500" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+
+      <!-- Dropdown -->
+      <div id="user-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:linear-gradient(135deg,#0d1b2a,#1a1a2e);border:1px solid rgba(240,165,0,0.3);border-radius:12px;min-width:200px;box-shadow:0 12px 40px rgba(0,0,0,0.7);z-index:9999;overflow:hidden;animation:fadeInDown .2s ease;">
+        <!-- User info -->
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,200,100,0.1);display:flex;align-items:center;gap:10px;">
+          <div id="dropdown-avatar" style="width:36px;height:36px;border-radius:50%;background:rgba(240,165,0,0.15);border:1px solid rgba(240,165,0,0.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👤</div>
+          <div>
+            <div id="dropdown-name" style="font-family:'Orbitron',sans-serif;font-size:11px;color:#f5c842;font-weight:700;"></div>
+            <div id="dropdown-email" style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;"></div>
+          </div>
+        </div>
+        <!-- Menu items -->
+        <div style="padding:6px;">
+          <div onclick="showPage('home',document.querySelector('.nav-item'));toggleUserMenu()" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:#fff;transition:background .15s;" onmouseover="this.style.background='rgba(255,200,100,0.08)'" onmouseout="this.style.background='transparent'">
+            <span>🏠</span> Dashboard
+          </div>
+          <div onclick="openCertModal();toggleUserMenu()" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:#fff;transition:background .15s;" onmouseover="this.style.background='rgba(255,200,100,0.08)'" onmouseout="this.style.background='transparent'">
+            <span>🏅</span> Generate Certificate
+          </div>
+          <hr style="border:none;border-top:1px solid rgba(255,200,100,0.1);margin:4px 0;">
+          <div onclick="doSignOut()" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:#e74c3c;transition:background .15s;" onmouseover="this.style.background='rgba(231,76,60,0.1)'" onmouseout="this.style.background='transparent'">
+            <span>🚪</span> Sign Out
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="body">
+<div class="sidebar" id="sidebar" style="display:none;">
+  <div class="nav-item active" onclick="showPage('home',this)"><span class="icon">🏠</span> Home</div>
+  <div class="nav-item" onclick="showPage('inventory',this)"><span class="icon">🛸</span> Asset Inventory</div>
+  <div class="nav-item" onclick="showPage('discovery',this)"><span class="icon">🏛</span> Asset Discovery</div>
+  <div class="nav-item" onclick="showPage('cbom',this)"><span class="icon">🧬</span> CBOM</div>
+  <div class="nav-item" onclick="showPage('pqc',this)"><span class="icon">🚶</span> Posture of PQC</div>
+  <div class="nav-item" onclick="showPage('rating',this)"><span class="icon">⭐</span> Cyber Rating</div>
+  <div class="nav-item" onclick="showPage('reporting',this)"><span class="icon">📊</span> Reporting</div>
+</div>
+<div class="content" id="main-content">
+
+<!-- LOGIN PAGE -->
+<div id="page-login" class="page active" style="position:relative;overflow:hidden;">
+<!-- 3D animated background canvas -->
+<canvas id="login-bg-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+<div class="login-wrap" style="position:relative;z-index:1;">
+  <div class="login-left">
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;">
+      <div style="background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:6px;font-size:11px;color:#fff;">Department of Financial Services</div>
+      <div style="background:rgba(255,255,255,0.15);padding:6px 10px;border-radius:6px;font-size:11px;color:#fff;">IBA</div>
+      <div style="background:rgba(255,255,255,0.15);padding:6px 10px;border-radius:6px;font-family:'Orbitron';font-size:11px;color:var(--gold-light);">PNB</div>
+    </div>
+
+    <!-- Google Sign-In Button -->
+    <div id="google-btn-wrap" style="margin-bottom:14px;">
+      <div id="g_id_onload"
+        data-client_id="517537886660-u3u3upihv2bllqr1drvuji6ko1eucl8s.apps.googleusercontent.com"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false">
+      </div>
+      <!-- Google renders its own button here -->
+      <div id="g_id_signin"
+        class="g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="continue_with"
+        data-size="large"
+        data-logo_alignment="left"
+        data-width="340"
+        style="display:flex;justify-content:center;">
+      </div>
+      <!-- Fallback button shown if GSI hasn't rendered yet -->
+      <button id="google-fallback-btn" onclick="triggerGoogleLogin()" style="display:none;width:100%;padding:11px 16px;background:#fff;border:1px solid #dadce0;border-radius:8px;align-items:center;justify-content:center;gap:10px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;color:#3c4043;transition:box-shadow .2s;">
+        <svg width="20" height="20" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.15);"></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);white-space:nowrap;">or sign in with email</div>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.15);"></div>
+    </div>
+
+    <label>Email/Username</label>
+    <input type="text" placeholder="hackathon_user@pnb.bank.in" id="login-user" value="" onkeydown="if(event.key==='Enter')doLogin()" oninput="this.style.borderColor='';document.getElementById('login-error').style.display='none'">
+    <label>Password</label>
+    <input type="password" placeholder="••••••••••" id="login-pass" value="" onkeydown="if(event.key==='Enter')doLogin()" oninput="this.style.borderColor='';document.getElementById('login-error').style.display='none'">
+    <div id="login-error" style="display:none;background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.5);border-radius:6px;padding:8px 12px;font-size:12px;color:#e74c3c;text-align:center;animation:fadeIn .3s ease;">❌ Invalid email or password. Please try again.</div>
+    <div class="login-forgot">Forgot Password?</div>
+    <button class="btn-login" onclick="doLogin()">Sign in</button>
+  </div>
+  <div class="login-right">
+
+    <!-- Logo -->
+    <div style="margin-bottom:18px;">
+      <div style="width:90px;height:90px;margin:0 auto;background:radial-gradient(circle at 35% 35%,#1a2a4a,#0d1b2a);border:3px solid #f0a500;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(240,165,0,0.35),0 0 60px rgba(240,165,0,0.1);position:relative;">
+        <!-- Shield SVG -->
+        <svg width="46" height="46" viewBox="0 0 48 48" fill="none">
+          <path d="M24 4L6 12v12c0 10.5 7.5 20.3 18 22.7C34.5 44.3 42 34.5 42 24V12L24 4z" fill="rgba(240,165,0,0.15)" stroke="#f0a500" stroke-width="2"/>
+          <path d="M24 4L6 12v12c0 10.5 7.5 20.3 18 22.7C34.5 44.3 42 34.5 42 24V12L24 4z" fill="none" stroke="rgba(240,165,0,0.3)" stroke-width="0.5" transform="scale(0.85) translate(3.6,3.6)"/>
+          <path d="M17 24l5 5 9-10" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="24" y="38" text-anchor="middle" fill="#f5c842" font-size="7" font-family="Orbitron,sans-serif" font-weight="700">PNB</text>
+        </svg>
+        <!-- Rotating ring -->
+        <div style="position:absolute;inset:-6px;border-radius:50%;border:1px dashed rgba(240,165,0,0.3);animation:spin 12s linear infinite;"></div>
+      </div>
+    </div>
+
+    <!-- Title block -->
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">PNB Cybersecurity</div>
+
+    <div class="hackathon-title" style="font-size:24px;line-height:1.25;margin-bottom:10px;">
+      PNB Cybersecurity
+    </div>
+
+    <!-- Gold divider -->
+    <div style="width:60px;height:2px;background:linear-gradient(90deg,transparent,#f0a500,transparent);margin:10px auto;border-radius:2px;"></div>
+
+    <div style="font-family:'Orbitron',sans-serif;font-size:15px;color:var(--gold-light);font-style:italic;letter-spacing:1px;animation:glow 3s ease-in-out infinite;">
+      Cyber Innovation Begins
+    </div>
+
+    <!-- Badges row -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;">
+      <div style="background:rgba(240,165,0,0.12);border:1px solid rgba(240,165,0,0.35);border-radius:8px;padding:6px 14px;font-family:'Orbitron',sans-serif;font-size:10px;color:#f5c842;letter-spacing:1px;">PNB</div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 14px;font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:1px;">DFS</div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- HOME DASHBOARD -->
+<div id="page-home" class="page">
+<style>
+.kpi-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.kpi-card{flex:1;min-width:130px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(6px);transition:transform .25s,box-shadow .25s;animation:fadeInUp .5s ease both;}
+.kpi-card:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.kpi-card.danger{background:rgba(180,0,0,0.35);border-color:rgba(255,80,80,0.4);}
+.kpi-icon{font-size:22px;animation:floatUp 3s ease-in-out infinite;}
+.kpi-info .kpi-label{font-size:11px;color:rgba(255,255,255,0.7);}
+.kpi-info .kpi-val{font-family:'Orbitron',sans-serif;font-size:22px;color:#fff;font-weight:700;}
+.dash-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+.dash-card{background:rgba(255,255,255,0.1);border:1px solid rgba(255,200,100,0.2);border-radius:10px;padding:14px;backdrop-filter:blur(4px);transition:transform .25s,border-color .3s;animation:fadeInUp .5s ease both;}
+.dash-card:hover{transform:translateY(-4px);border-color:rgba(255,200,100,0.6);}
+.dash-card h4{font-size:12px;color:rgba(255,255,255,0.75);margin-bottom:10px;font-weight:600;}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:70px;}
+.bar{border-radius:3px 3px 0 0;min-width:18px;flex:1;transition:height .6s ease;}
+.donut-wrap{display:flex;align-items:center;gap:10px;}
+.donut{position:relative;width:70px;height:70px;}
+.donut svg{transform:rotate(-90deg);}
+.donut-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;}
+.legend{display:flex;flex-direction:column;gap:4px;font-size:11px;}
+.legend-item{display:flex;align-items:center;gap:5px;color:#fff;}
+.dot{width:8px;height:8px;border-radius:50%;animation:dotPulse 2s ease-in-out infinite;}
+.timeline-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:11px;}
+.tl-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.tl-label{color:rgba(255,255,255,0.8);flex:1;}
+.tl-count{font-weight:700;color:#fff;}
+.inv-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px;}
+.btn-sm{padding:6px 14px;border-radius:6px;border:none;cursor:pointer;font-family:'Rajdhani';font-size:13px;font-weight:600;transition:transform .15s,box-shadow .15s;}
+.btn-sm:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.btn-gold{background:var(--btn-gold);color:#7a0000;}
+.btn-outline{background:transparent;border:1px solid rgba(255,200,100,0.5);color:#fff;}
+.search-box{padding:6px 12px;border-radius:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,200,100,0.3);color:#fff;font-family:'Rajdhani';font-size:13px;outline:none;transition:border-color .3s,box-shadow .3s;}
+.search-box:focus{border-color:var(--gold);box-shadow:0 0 8px rgba(240,165,0,0.3);}
+.data-table{width:100%;border-collapse:collapse;font-size:12px;}
+.data-table th{background:rgba(140,0,0,0.6);color:var(--gold-light);padding:8px 10px;text-align:left;font-weight:700;font-size:11px;}
+.data-table td{padding:7px 10px;color:#fff;border-bottom:1px solid rgba(255,200,100,0.1);transition:background .2s;}
+.data-table tr:nth-child(even) td{background:rgba(255,200,150,0.07);}
+.data-table tr:hover td{background:rgba(255,220,150,0.15);}
+.data-table tbody tr{animation:rowSlideIn .4s ease both;}
+.data-table tbody tr:nth-child(1){animation-delay:.05s;}
+.data-table tbody tr:nth-child(2){animation-delay:.1s;}
+.data-table tbody tr:nth-child(3){animation-delay:.15s;}
+.data-table tbody tr:nth-child(4){animation-delay:.2s;}
+.data-table tbody tr:nth-child(5){animation-delay:.25s;}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;}
+.badge-high{background:#c0392b;color:#fff;}
+.badge-medium{background:#e67e22;color:#fff;}
+.badge-low{background:#27ae60;color:#fff;}
+.badge-critical{background:#7b0000;color:#fff;}
+.cert-valid{color:#27ae60;}.cert-expiring{color:#f39c12;animation:blink 1.5s infinite;}.cert-expired{color:#e74c3c;animation:blink 1s infinite;}
+.activity-bar{background:rgba(0,0,0,0.2);padding:7px 14px;display:flex;gap:20px;flex-wrap:wrap;font-size:11px;color:rgba(255,255,255,0.75);border-radius:0 0 8px 8px;margin-top:6px;}
+.act-item{display:flex;align-items:center;gap:5px;}
+.act-dot{width:6px;height:6px;border-radius:50%;animation:dotPulse 1.5s ease-in-out infinite;}
+</style>
+<div class="kpi-row">
+  <div class="kpi-card" style="animation-delay:.05s"><div class="kpi-icon">🔧</div><div class="kpi-info"><div class="kpi-label">Total Assets</div><div class="kpi-val" data-count="128">128</div></div></div>
+  <div class="kpi-card" style="animation-delay:.1s"><div class="kpi-icon">🌐</div><div class="kpi-info"><div class="kpi-label">Public Web Apps</div><div class="kpi-val" data-count="42">42</div></div></div>
+  <div class="kpi-card" style="animation-delay:.15s"><div class="kpi-icon">🔌</div><div class="kpi-info"><div class="kpi-label">APIs</div><div class="kpi-val" data-count="26">26</div></div></div>
+  <div class="kpi-card" style="animation-delay:.2s"><div class="kpi-icon">🖥</div><div class="kpi-info"><div class="kpi-label">Servers</div><div class="kpi-val" data-count="37">37</div></div></div>
+  <div class="kpi-card danger" style="animation-delay:.25s"><div class="kpi-icon">⚠️</div><div class="kpi-info"><div class="kpi-label">Expiring Certs</div><div class="kpi-val" data-count="9">9</div></div></div>
+  <div class="kpi-card danger" style="animation-delay:.3s"><div class="kpi-icon">🚨</div><div class="kpi-info"><div class="kpi-label">High Risk Assets</div><div class="kpi-val" data-count="14">14</div></div></div>
+</div>
+<div class="dash-row">
+  <div class="dash-card" style="animation-delay:.1s"><h4>Asset Type Distribution</h4><div style="display:flex;align-items:center;gap:10px;"><svg width="80" height="80" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#3498db" stroke-width="6" stroke-dasharray="32.7 66.3"/><circle cx="18" cy="18" r="15" fill="none" stroke="#e67e22" stroke-width="6" stroke-dasharray="22.7 76.3" stroke-dashoffset="-32.7"/><circle cx="18" cy="18" r="15" fill="none" stroke="#27ae60" stroke-width="6" stroke-dasharray="28.7 70.3" stroke-dashoffset="-55.4"/><circle cx="18" cy="18" r="15" fill="none" stroke="#f39c12" stroke-width="6" stroke-dasharray="12 87" stroke-dashoffset="-84.1"/><text x="18" y="22" text-anchor="middle" fill="#fff" font-size="7" font-family="Orbitron">128</text></svg><div class="legend"><div class="legend-item"><div class="dot" style="background:#3498db"></div>Web Apps 42</div><div class="legend-item"><div class="dot" style="background:#e67e22"></div>APIs 26</div><div class="legend-item"><div class="dot" style="background:#27ae60"></div>Servers 37</div><div class="legend-item"><div class="dot" style="background:#f39c12"></div>LB 11</div></div></div></div>
+  <div class="dash-card" style="animation-delay:.15s"><h4>Asset Risk Distribution</h4><div class="bar-chart"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;"><div class="bar" style="height:60px;background:#c0392b;"></div><div style="font-size:9px;color:#fff">Critical</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;"><div class="bar" style="height:45px;background:#e67e22;"></div><div style="font-size:9px;color:#fff">High</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;"><div class="bar" style="height:55px;background:#f39c12;"></div><div style="font-size:9px;color:#fff">Medium</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;"><div class="bar" style="height:30px;background:#27ae60;"></div><div style="font-size:9px;color:#fff">Low</div></div></div><div style="text-align:center;margin-top:6px;font-family:'Orbitron';font-size:18px;color:#e74c3c;font-weight:700;">11% <span style="font-size:11px;color:rgba(255,255,255,0.7)">High Risk</span></div></div>
+  <div class="dash-card" style="animation-delay:.2s"><h4>Certificate Expiry Timeline</h4><div class="timeline-row"><div class="tl-dot" style="background:#e74c3c;"></div><div class="tl-label">0–30 Days</div><div class="tl-count">3</div></div><div class="timeline-row"><div class="tl-dot" style="background:#f39c12;"></div><div class="tl-label">30–60 Days</div><div class="tl-count">4</div></div><div class="timeline-row"><div class="tl-dot" style="background:#e67e22;"></div><div class="tl-label">60–90 Days</div><div class="tl-count">2</div></div><div class="timeline-row"><div class="tl-dot" style="background:#27ae60;"></div><div class="tl-label">&gt;90 Days</div><div class="tl-count">84</div></div></div>
+  <div class="dash-card" style="animation-delay:.25s"><h4>IP Version Breakdown</h4><div class="donut-wrap"><div class="donut"><svg width="70" height="70" viewBox="0 0 36 36"><circle cx="18" cy="18" r="13" fill="none" stroke="#3498db" stroke-width="6" stroke-dasharray="71 29"/><circle cx="18" cy="18" r="13" fill="none" stroke="#27ae60" stroke-width="6" stroke-dasharray="12 88" stroke-dashoffset="-71"/></svg><div class="donut-label">86%</div></div><div class="legend"><div class="legend-item"><div class="dot" style="background:#3498db"></div>IPv4 86%</div><div class="legend-item"><div class="dot" style="background:#27ae60"></div>IPv6 14%</div></div></div></div>
+</div>
+<div class="dash-card" style="margin-bottom:10px;">
+  <div class="inv-toolbar"><strong style="color:var(--gold-light);font-size:13px;">Asset Inventory</strong><div style="display:flex;gap:8px;align-items:center;"><button class="btn-sm btn-gold" onclick="openAddAssetModal()">+ Add Asset ▾</button><button class="btn-sm btn-outline" onclick="scanAllAssets()">Scan All ▶</button><button class="btn-sm" style="background:linear-gradient(135deg,#1a6b3c,#27ae60);color:#fff;" onclick="openCertModal()">🏅 Generate Certificate</button><input class="search-box" placeholder="🔍 Search..." type="text"></div></div>
+  <table class="data-table" id="home-asset-table"><thead><tr><th>☐</th><th>Asset Name</th><th>URL</th><th>IPV4</th><th>IPV6</th><th>Type</th><th>Owner</th><th>Risk</th><th>Cert Status</th><th>Key Length</th><th>Last Scan</th><th>Action</th></tr></thead>
+  <tbody>
+    <tr><td>☐</td><td>portal.company.com</td><td><a href="#" style="color:var(--gold-light)">https://portal.company.com</a></td><td>34.12.11.45</td><td>2001:0db8…7334</td><td>Web App</td><td>IT</td><td><span class="badge badge-high">High</span></td><td class="cert-valid">✔ Valid</td><td>2048-bit</td><td>2 hrs ago</td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>☐</td><td>api.company.com</td><td><a href="#" style="color:var(--gold-light)">https://api.company.com</a></td><td>34.12.11.90</td><td>2001:0db8…1111</td><td>API</td><td>DevOps</td><td><span class="badge badge-medium">Medium</span></td><td class="cert-expiring">⚠ Expiring</td><td>4096-bit</td><td>5 hrs ago</td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>☐</td><td>vpn.company.com</td><td><a href="#" style="color:var(--gold-light)">https://vpn.company.com</a></td><td>34.55.90.21</td><td>2001:0db8…abcd</td><td>Gateway</td><td>Infra</td><td><span class="badge badge-critical">Critical</span></td><td class="cert-expired">✖ Expired</td><td>1024-bit</td><td>1 hr ago</td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>☐</td><td>mail.company.com</td><td><a href="#" style="color:var(--gold-light)">https://mail.company.com</a></td><td>35.11.44.10</td><td>2001:0db8…0a10</td><td>Server</td><td>IT</td><td><span class="badge badge-low">Low</span></td><td class="cert-valid">✔ Valid</td><td>3072-bit</td><td>1 day ago</td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>☐</td><td>app.company.com</td><td><a href="#" style="color:var(--gold-light)">https://app.company.com</a></td><td>34.77.21.12</td><td>2001:0db8…344</td><td>Web App</td><td>IT</td><td><span class="badge badge-medium">Medium</span></td><td class="cert-valid">✔ Valid</td><td>2048-bit</td><td>5 days ago</td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+  </tbody></table>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+  <div class="dash-card"><strong style="color:var(--gold-light);font-size:12px;display:block;margin-bottom:8px;">Nameserver Records &nbsp; Domain: <span style="color:#fff;">Company.Com</span> <button class="btn-sm btn-gold" style="padding:3px 10px;font-size:11px;">Resolve</button></strong><table class="data-table" style="font-size:11px;"><thead><tr><th>Hostname</th><th>Type</th><th>IP Address</th><th>IPv6</th><th>TTL</th></tr></thead><tbody><tr><td>ns1.company.com</td><td><span class="badge" style="background:#2980b9;color:#fff;">NS</span></td><td>192.0.2.10</td><td>2001:0db8:10</td><td>3600</td></tr><tr><td>ns2.company.com</td><td><span class="badge" style="background:#2980b9;color:#fff;">NS</span></td><td>192.0.2.11</td><td>2001:0db6:11</td><td>3600</td></tr><tr><td>www.company.com</td><td><span class="badge" style="background:#27ae60;color:#fff;">A</span></td><td>34.12.11.45</td><td>2001:0db8:…0579</td><td>300</td></tr><tr><td>mail.company.com</td><td><span class="badge" style="background:#8e44ad;color:#fff;">MX</span></td><td>35.11.44.10</td><td>2001:0db8…0a10</td><td>300</td></tr></tbody></table></div>
+  <div class="dash-card"><strong style="color:var(--gold-light);font-size:12px;display:block;margin-bottom:8px;">Crypto &amp; Security Overview</strong><table class="data-table" style="font-size:11px;"><thead><tr><th>Asset</th><th>Key Length</th><th>Cipher Suite</th><th>TLS</th><th>CA</th></tr></thead><tbody><tr><td>portal.company.com</td><td><span class="badge badge-medium">2048-bit</span></td><td style="font-size:10px;">ECDHE-RSA-AES256-GCM</td><td>1.2</td><td>DigiCert</td></tr><tr><td>api.company.com</td><td><span class="badge badge-low">4096-bit</span></td><td style="font-size:10px;">TLS_AES_256-GCM</td><td>1.3</td><td>Let's Encrypt</td></tr><tr><td>vpn.company.com</td><td><span class="badge badge-critical">1024-bit</span></td><td style="font-size:10px;color:#e74c3c;">TLS_RSA_WITH_DES_CBC</td><td>1.0</td><td style="color:#e74c3c;">COMODO</td></tr><tr><td>mail.company.com</td><td><span class="badge badge-low">3072-bit</span></td><td style="font-size:10px;">ECDHE-ECDSA-AES256</td><td>1.2</td><td>GlobalSign</td></tr></tbody></table></div>
+</div>
+<div class="activity-bar" style="margin-top:8px;">
+  <div class="act-item"><div class="act-dot" style="background:#e74c3c;"></div>Scan completed: 125 assets — 10 min ago</div>
+  <div class="act-item"><div class="act-dot" style="background:#f39c12;"></div>Weak cipher detected: vpn.company.com — 1 hr ago</div>
+  <div class="act-item"><div class="act-dot" style="background:#e74c3c;"></div>Certificate expiring: api.company.com — 3 hrs ago</div>
+  <div class="act-item"><div class="act-dot" style="background:#27ae60;"></div>New asset discovered: dav-api.company.com</div>
+</div>
+</div>
+
+<!-- ASSET INVENTORY -->
+<div id="page-inventory" class="page">
+<style>
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.tab-btn{padding:8px 18px;border-radius:20px;border:none;cursor:pointer;font-family:'Rajdhani';font-size:13px;font-weight:700;background:rgba(120,40,40,0.7);color:#fff;transition:background .2s,transform .2s;}
+.tab-btn.active{background:var(--tab-active);color:#fff;}
+.tab-btn:hover{background:rgba(180,60,60,0.8);transform:translateY(-2px);}
+.sub-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.sub-tab{padding:5px 14px;border-radius:14px;border:none;cursor:pointer;font-family:'Rajdhani';font-size:12px;font-weight:600;background:rgba(100,30,30,0.6);color:rgba(255,255,255,0.75);transition:.2s;}
+.sub-tab.active{background:var(--gold);color:#7a0000;}
+.tab-content{display:none;}.tab-content.active{display:block;animation:fadeIn .35s ease;}
+.btn-delete{background:rgba(180,0,0,0.3);border:1px solid rgba(255,80,80,0.3);color:#ff6b6b;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:13px;transition:background .2s,transform .2s;}
+.btn-delete:hover{background:rgba(220,0,0,0.6);transform:scale(1.15);color:#fff;}
+</style>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+  <div class="page-title" style="margin:0;">Asset Inventory</div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <input class="search-box" placeholder="🔍 Search assets..." type="text" oninput="filterInventory(this.value)">
+    <button class="btn-sm btn-gold" onclick="openAddAssetModal()">+ Add Asset</button>
+    <button class="btn-sm btn-outline">⬇ Export</button>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab(this,'inv-tab','inv-domains')">Domains (20)</button>
+  <button class="tab-btn" onclick="switchTab(this,'inv-tab','inv-ssl')">SSL (15)</button>
+  <button class="tab-btn" onclick="switchTab(this,'inv-tab','inv-ip')">IP Address/Subnets (34)</button>
+  <button class="tab-btn" onclick="switchTab(this,'inv-tab','inv-software')">Software (52)</button>
+</div>
+<div id="inv-domains" class="tab-content active">
+  <div class="sub-tabs"><button class="sub-tab active">New (5)</button><button class="sub-tab">False Positive (10)</button><button class="sub-tab">Confirmed (2)</button><button class="sub-tab">All (3)</button></div>
+  <div class="dash-card"><table class="data-table" id="inv-domains-table"><thead><tr><th>Detection Date</th><th>Domain Name</th><th>Registration Date</th><th>Registrar</th><th>Company Name</th><th>Risk</th><th>Action</th></tr></thead><tbody>
+    <tr><td>03 Mar 2026</td><td>www.cos.pnb.bank.in</td><td>17 Feb 2005</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-low">Low</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>17 Oct 2024</td><td>www2.pnbrrbkiosk.in</td><td>22 Mar 2021</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-medium">Medium</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>17 Oct 2024</td><td>upload.pnbuniv.net.in</td><td>22 Mar 2021</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-low">Low</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>17 Oct 2024</td><td>postman.pnb.bank.in</td><td>22 Mar 2021</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-high">High</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>17 Nov 2024</td><td>proxy.pnb.bank.in</td><td>22 Mar 2021</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-medium">Medium</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>01 Dec 2024</td><td>api.pnb.bank.in</td><td>10 Jan 2020</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-low">Low</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>15 Jan 2025</td><td>netbanking.pnb.bank.in</td><td>05 Mar 2018</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-critical">Critical</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>20 Feb 2025</td><td>mobile.pnb.bank.in</td><td>12 Jun 2019</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-medium">Medium</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>05 Mar 2025</td><td>vpn.pnb.bank.in</td><td>08 Aug 2017</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-high">High</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+    <tr><td>10 Mar 2026</td><td>mail.pnb.bank.in</td><td>22 Mar 2021</td><td>National Internet Exchange of India</td><td>PNB</td><td><span class="badge badge-low">Low</span></td><td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td></tr>
+  </tbody></table></div>
+</div>
+<div id="inv-ssl" class="tab-content">
+  <div class="sub-tabs"><button class="sub-tab active">New (3)</button><button class="sub-tab">False/Ignore (9)</button><button class="sub-tab">Confirmed</button><button class="sub-tab">All (3)</button></div>
+  <div class="dash-card"><table class="data-table"><thead><tr><th>Detection Date</th><th>SSL SHA Fingerprint</th><th>Valid From</th><th>Common Name</th><th>Company Name</th><th>Certificate Authority</th><th>Status</th></tr></thead><tbody>
+    <tr><td>10 Mar 2026</td><td style="font-family:'Share Tech Mono';font-size:10px;">b7563b983bfd217d471f607c9bbc509034a6</td><td>08 Feb 2026</td><td>Generic Cert for WF Ovrd</td><td>PNB</td><td>Symantec</td><td class="cert-valid">✔ Valid</td></tr>
+    <tr><td>10 Mar 2026</td><td style="font-family:'Share Tech Mono';font-size:10px;">d8527f5c3e99b37164a8f3274a914506c94</td><td>07 Feb 2026</td><td>Generic Cert for WF Ovrd</td><td>PNB</td><td>DigiCert</td><td class="cert-expiring">⚠ Expiring</td></tr>
+    <tr><td>10 Mar 2026</td><td style="font-family:'Share Tech Mono';font-size:10px;">Abe3195b86704f88cb75c7bcd11c69b9e493</td><td>06 Feb 2026</td><td>Generic Cert for WF Ovrd</td><td>PNB</td><td>Entrust</td><td class="cert-valid">✔ Valid</td></tr>
+    <tr><td>15 Jan 2026</td><td style="font-family:'Share Tech Mono';font-size:10px;">c9a12d4e7f3b8a1056cd9e2f4b7a3c8d1e2f</td><td>15 Jan 2026</td><td>netbanking.pnb.bank.in</td><td>PNB</td><td>GlobalSign</td><td class="cert-expired">✖ Expired</td></tr>
+    <tr><td>20 Feb 2026</td><td style="font-family:'Share Tech Mono';font-size:10px;">f1e2d3c4b5a6978869504132abcdef012345</td><td>20 Feb 2026</td><td>mobile.pnb.bank.in</td><td>PNB</td><td>Let's Encrypt</td><td class="cert-valid">✔ Valid</td></tr>
+    <tr><td>01 Mar 2026</td><td style="font-family:'Share Tech Mono';font-size:10px;">a1b2c3d4e5f6071829304a5b6c7d8e9f0a1b</td><td>01 Mar 2026</td><td>vpn.pnb.bank.in</td><td>PNB</td><td>COMODO</td><td class="cert-expiring">⚠ Expiring</td></tr>
+  </tbody></table></div>
+</div>
+<div id="inv-ip" class="tab-content">
+  <div class="sub-tabs"><button class="sub-tab active">New (15)</button><button class="sub-tab">False or Ignore (10)</button><button class="sub-tab">Confirmed (9)</button><button class="sub-tab">All (34)</button></div>
+  <div class="dash-card"><table class="data-table"><thead><tr><th>Detection Date</th><th>IP Address</th><th>Ports</th><th>Subnet</th><th>ASN</th><th>Netname</th><th>Location</th><th>Company</th><th>Risk</th></tr></thead><tbody>
+    <tr><td>05 Mar 2026</td><td>40.104.62.216</td><td>80</td><td>103.107.224.0/22</td><td>AS9583</td><td>MSFT</td><td>—</td><td>Punjab National Bank</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>17 Oct 2024</td><td>40.101.72.212</td><td>80</td><td>103.107.224.0/22</td><td>AS9583</td><td>—</td><td>India</td><td>Punjab National Bank</td><td><span class="badge badge-medium">Medium</span></td></tr>
+    <tr><td>17 Oct 2024</td><td>103.25.151.22</td><td>53, 80</td><td>103.107.224.0/22</td><td>AS9583</td><td>Quantum-Link-Co</td><td>Nashik, India</td><td>Punjab National Bank</td><td><span class="badge badge-high">High</span></td></tr>
+    <tr><td>17 Nov 2024</td><td>181.65.122.92</td><td>80, 443</td><td>103.107.224.0/22</td><td>AS9583</td><td>E2E-Networks-IN</td><td>Chennai, India</td><td>Punjab National Bank</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>17 Nov 2024</td><td>20.153.63.72</td><td>443</td><td>103.107.224.0/22</td><td>AS9583</td><td>—</td><td>Leh, India</td><td>Punjab National Bank</td><td><span class="badge badge-medium">Medium</span></td></tr>
+    <tr><td>01 Dec 2024</td><td>49.51.98.173</td><td>443, 8443</td><td>49.51.96.0/20</td><td>AS45609</td><td>Bharti-Airtel</td><td>Mumbai, India</td><td>Punjab National Bank</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>10 Jan 2025</td><td>103.109.225.128</td><td>80, 443</td><td>103.109.224.0/22</td><td>AS9583</td><td>PNB-NET</td><td>New Delhi, India</td><td>Punjab National Bank</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>15 Feb 2025</td><td>103.109.225.201</td><td>443</td><td>103.109.224.0/22</td><td>AS9583</td><td>PNB-NET</td><td>New Delhi, India</td><td>Punjab National Bank</td><td><span class="badge badge-medium">Medium</span></td></tr>
+    <tr><td>20 Feb 2025</td><td>21.151.42.188</td><td>22</td><td>103.107.224.0/22</td><td>AS9583</td><td>—</td><td>India</td><td>Punjab National Bank</td><td><span class="badge badge-critical">Critical</span></td></tr>
+    <tr><td>05 Mar 2026</td><td>66.68.262.93</td><td>2087, 443</td><td>66.68.256.0/20</td><td>AS9583</td><td>E2E-Networks-IN</td><td>Hyderabad, India</td><td>Punjab National Bank</td><td><span class="badge badge-high">High</span></td></tr>
+  </tbody></table></div>
+</div>
+<div id="inv-software" class="tab-content">
+  <div class="sub-tabs"><button class="sub-tab active">New (10)</button><button class="sub-tab">False or Ignore (6)</button><button class="sub-tab">Confirmed (36)</button><button class="sub-tab">All (52)</button></div>
+  <div class="dash-card"><table class="data-table"><thead><tr><th>Detection Date</th><th>Product</th><th>Version</th><th>Type</th><th>Port</th><th>Host</th><th>Company Name</th><th>Risk</th></tr></thead><tbody>
+    <tr><td>05 Mar 2026</td><td>http_server</td><td>—</td><td>WebServer</td><td>443</td><td>49.51.98.173</td><td>PNB</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>17 Oct 2024</td><td>Apache</td><td>2.4.51</td><td>WebServer</td><td>443</td><td>40.59.99.173</td><td>PNB</td><td><span class="badge badge-medium">Medium</span></td></tr>
+    <tr><td>17 Oct 2024</td><td>IIS</td><td>10.0</td><td>WebServer</td><td>80</td><td>40.101.27.212</td><td>PNB</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>06 Mar 2026</td><td>OpenResty</td><td>1.27.1.1</td><td>Web Server</td><td>2087</td><td>66.68.262.93</td><td>PNB</td><td><span class="badge badge-medium">Medium</span></td></tr>
+    <tr><td>10 Jan 2025</td><td>nginx</td><td>1.24.0</td><td>WebServer</td><td>443</td><td>103.109.225.128</td><td>PNB</td><td><span class="badge badge-low">Low</span></td></tr>
+    <tr><td>15 Feb 2025</td><td>OpenSSL</td><td>1.0.2</td><td>Crypto Library</td><td>443</td><td>103.109.225.201</td><td>PNB</td><td><span class="badge badge-critical">Critical</span></td></tr>
+    <tr><td>20 Feb 2025</td><td>Tomcat</td><td>9.0.65</td><td>App Server</td><td>8080</td><td>181.65.122.92</td><td>PNB</td><td><span class="badge badge-high">High</span></td></tr>
+    <tr><td>01 Mar 2025</td><td>WordPress</td><td>6.4.2</td><td>CMS</td><td>443</td><td>40.104.62.216</td><td>PNB</td><td><span class="badge badge-medium">Medium</span></td></tr>
+    <tr><td>05 Mar 2026</td><td>jQuery</td><td>1.12.4</td><td>JS Library</td><td>443</td><td>49.51.98.173</td><td>PNB</td><td><span class="badge badge-high">High</span></td></tr>
+    <tr><td>10 Mar 2026</td><td>PHP</td><td>7.4.3</td><td>Runtime</td><td>80</td><td>20.153.63.72</td><td>PNB</td><td><span class="badge badge-high">High</span></td></tr>
+  </tbody></table></div>
+</div>
+</div>
+
+<!-- ASSET DISCOVERY -->
+<div id="page-discovery" class="page">
+<style>
+.disc-input-row{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;}
+.disc-input-main{flex:1;min-width:260px;padding:12px 16px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:15px;outline:none;transition:border-color .3s,box-shadow .3s;}
+.disc-input-main:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(240,165,0,0.3);}
+.disc-input-main::placeholder{color:rgba(255,255,255,0.35);}
+.btn-discover{padding:12px 24px;background:linear-gradient(135deg,#c0392b,#8B0000);border:none;border-radius:8px;color:#fff;font-family:'Orbitron';font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;}
+.btn-discover:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,57,43,0.5);}
+.period-pill{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,200,100,0.35);background:transparent;color:rgba(255,255,255,0.65);font-family:'Rajdhani';font-size:12px;cursor:pointer;transition:all .2s;}
+.period-pill.active,.period-pill:hover{background:var(--gold);color:#111;border-color:var(--gold);font-weight:700;}
+.disc-stat-row{display:flex;gap:10px;flex-wrap:wrap;}
+.disc-stat{flex:1;min-width:100px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,200,100,0.2);border-radius:10px;padding:10px 14px;text-align:center;transition:transform .2s;}
+.disc-stat:hover{transform:translateY(-3px);}
+.disc-stat .dsv{font-family:'Orbitron';font-size:22px;font-weight:700;color:#fff;}
+.disc-stat .dsl{font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;}
+.disc-result-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.disc-result-table th{background:rgba(140,0,0,0.5);color:var(--gold-light);padding:8px 10px;text-align:left;font-size:11px;}
+.disc-result-table td{padding:7px 10px;color:#fff;border-bottom:1px solid rgba(255,200,100,0.08);}
+.disc-result-table tr:hover td{background:rgba(255,220,150,0.1);}
+#disc-empty{text-align:center;padding:40px;color:rgba(255,255,255,0.3);font-size:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+#disc-scanning{display:none;text-align:center;padding:30px;color:var(--gold-light);font-family:'Orbitron';font-size:13px;}
+</style>
+<div class="page-title">Asset Discovery</div>
+<div style="display:flex;flex-direction:column;gap:14px;">
+
+  <!-- Input Card -->
+  <div class="dash-card">
+    <div style="font-size:13px;color:var(--gold-light);font-weight:700;margin-bottom:10px;">🔍 Discover Assets by Domain / URL</div>
+    <div class="disc-input-row">
+      <input id="disc-domain-input" class="disc-input-main" type="text" placeholder="e.g. pnb.bank.in  or  https://portal.company.com" onkeydown="if(event.key==='Enter')runDiscovery()">
+      <button class="btn-discover" onclick="runDiscovery()">⚡ Discover</button>
+    </div>
+    <!-- Time Period -->
+    <div style="margin-top:14px;padding:14px;background:rgba(255,200,0,0.07);border-radius:8px;border:1px solid rgba(255,200,100,0.15);">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--gold-light);">📅 Time Period</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Specify the period for data — graph updates accordingly</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="period-pills">
+          <button class="period-pill active" onclick="setPeriod('24h',this)">24 Hours</button>
+          <button class="period-pill" onclick="setPeriod('7d',this)">7 Days</button>
+          <button class="period-pill" onclick="setPeriod('30d',this)">30 Days</button>
+          <button class="period-pill" onclick="setPeriod('90d',this)">90 Days</button>
+          <button class="period-pill" onclick="setPeriod('custom',this)">Custom</button>
+        </div>
+      </div>
+      <div id="custom-date-row" style="display:none;margin-top:10px;display:none;gap:10px;align-items:center;font-size:13px;color:#fff;">
+        <span>From</span>
+        <input type="date" id="disc-date-from" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,200,100,0.3);border-radius:6px;padding:6px 10px;color:#fff;font-family:Rajdhani;outline:none;">
+        <span>To</span>
+        <input type="date" id="disc-date-to" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,200,100,0.3);border-radius:6px;padding:6px 10px;color:#fff;font-family:Rajdhani;outline:none;">
+        <button class="btn-discover" style="padding:7px 16px;font-size:12px;" onclick="runDiscovery()">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Row (hidden until discovery) -->
+  <div id="disc-stats-row" style="display:none;" class="disc-stat-row">
+    <div class="disc-stat"><div class="dsv" id="ds-total">0</div><div class="dsl">Assets Found</div></div>
+    <div class="disc-stat"><div class="dsv" id="ds-subdomains">0</div><div class="dsl">Subdomains</div></div>
+    <div class="disc-stat"><div class="dsv" id="ds-ips">0</div><div class="dsl">IP Addresses</div></div>
+    <div class="disc-stat"><div class="dsv" id="ds-open-ports">0</div><div class="dsl">Open Ports</div></div>
+    <div class="disc-stat"><div class="dsv" id="ds-risk">0</div><div class="dsl" style="color:#e74c3c;">High Risk</div></div>
+  </div>
+
+  <!-- Network Graph Card -->
+  <div class="dash-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+      <h4 style="color:var(--gold-light);">Network Asset Graph</h4>
+      <div id="disc-graph-meta" style="font-size:11px;color:rgba(255,255,255,0.4);font-family:'Share Tech Mono';">Enter a domain above to analyse</div>
+    </div>
+    <div id="disc-empty" style="display:flex;">
+      <div style="font-size:40px;">🌐</div>
+      <div>Enter a domain or URL and click Discover</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.2);">The graph will map all discovered assets, subdomains, IPs and connections</div>
+    </div>
+    <div id="disc-scanning" style="display:none;">
+      <div style="font-size:36px;animation:spin 1s linear infinite;display:inline-block;">🔍</div>
+      <div id="disc-scan-text" style="margin-top:10px;">Scanning...</div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:6px;height:6px;width:280px;margin:12px auto 0;overflow:hidden;">
+        <div id="disc-scan-bar" style="height:6px;background:linear-gradient(90deg,#c0392b,#f0a500);border-radius:6px;width:0%;transition:width .4s ease;"></div>
+      </div>
+    </div>
+    <canvas id="network-canvas" width="900" height="480" style="display:none;width:100%;border-radius:8px;background:rgba(0,0,40,0.4);"></canvas>
+  </div>
+
+  <!-- Results Table (hidden until discovery) -->
+  <div id="disc-results-card" class="dash-card" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <h4 style="color:var(--gold-light);">Discovered Assets</h4>
+      <span id="disc-period-label" style="font-size:11px;color:rgba(255,255,255,0.4);"></span>
+    </div>
+    <table class="disc-result-table">
+      <thead><tr><th>#</th><th>Asset / Subdomain</th><th>IP Address</th><th>Type</th><th>Open Ports</th><th>TLS</th><th>Risk</th><th>First Seen</th></tr></thead>
+      <tbody id="disc-results-body"></tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- CBOM -->
+<div id="page-cbom" class="page">
+<style>
+.cbom-header{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.cbom-stat{flex:1;min-width:100px;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px 14px;text-align:center;transition:transform .25s;animation:scaleIn .5s ease both;}
+.cbom-stat:hover{transform:scale(1.05);}
+.cbom-stat.highlight{background:rgba(180,0,0,0.4);}
+.cbom-stat .val{font-family:'Orbitron',sans-serif;font-size:26px;color:#fff;font-weight:700;}
+.cbom-stat .lbl{font-size:11px;color:rgba(255,255,255,0.65);}
+.cbom-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.cbom-card{background:rgba(0,0,40,0.6);border-radius:10px;padding:14px;animation:fadeInUp .5s ease both;}
+.cbom-card h4{font-size:13px;color:var(--gold-light);margin-bottom:10px;}
+.cipher-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.cipher-bar-wrap{flex:1;background:rgba(255,255,255,0.1);border-radius:3px;height:14px;}
+.cipher-bar{height:14px;border-radius:3px;background:linear-gradient(90deg,#3498db,#2980b9);animation:progressFill .8s ease both;}
+.cipher-label{font-size:11px;color:#fff;min-width:220px;}
+.cipher-count{font-size:12px;font-weight:700;color:#fff;min-width:20px;text-align:right;}
+</style>
+<div class="page-title">Cryptographic Bill of Materials (CBOM)</div>
+<div class="cbom-header">
+  <div class="cbom-stat" style="animation-delay:.05s"><div class="val">17</div><div class="lbl">Total Applications</div></div>
+  <div class="cbom-stat" style="animation-delay:.1s"><div class="val">56</div><div class="lbl">Sites Surveyed</div></div>
+  <div class="cbom-stat" style="animation-delay:.15s"><div class="val">93</div><div class="lbl">Active Certificates</div></div>
+  <div class="cbom-stat highlight" style="animation-delay:.2s"><div class="val">22</div><div class="lbl">Weak Cryptography</div></div>
+  <div class="cbom-stat" style="animation-delay:.25s"><div class="val">7</div><div class="lbl">Certificate Issues</div></div>
+</div>
+<div class="cbom-grid">
+  <div class="cbom-card" style="animation-delay:.1s"><h4>Key Length Distribution</h4><div class="bar-chart" style="height:90px;"><div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;"><div style="font-size:10px;color:#fff">6</div><div class="bar" style="height:18px;background:#27ae60;width:100%;"></div><div style="font-size:10px;color:rgba(255,255,255,0.6)">2048</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;"><div style="font-size:10px;color:#fff">11</div><div class="bar" style="height:33px;background:#3498db;width:100%;"></div><div style="font-size:10px;color:rgba(255,255,255,0.6)">3072</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;"><div style="font-size:10px;color:#fff">16</div><div class="bar" style="height:48px;background:#8e44ad;width:100%;"></div><div style="font-size:10px;color:rgba(255,255,255,0.6)">4096</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;"><div style="font-size:10px;color:#fff">7</div><div class="bar" style="height:21px;background:#e74c3c;width:100%;"></div><div style="font-size:10px;color:rgba(255,255,255,0.6)">1024</div></div></div></div>
+  <div class="cbom-card" style="animation-delay:.15s"><h4>Cipher Usage</h4>
+    <div class="cipher-row"><div class="cipher-label">ECDHE-RSA-AES256-GCM-SHA384</div><div class="cipher-bar-wrap"><div class="cipher-bar" style="width:60%;animation-delay:.2s"></div></div><div class="cipher-count">29</div></div>
+    <div class="cipher-row"><div class="cipher-label">ECDHE-ECDSA-AES256-GCM-SHA384</div><div class="cipher-bar-wrap"><div class="cipher-bar" style="width:47%;background:linear-gradient(90deg,#27ae60,#1e8449);animation-delay:.3s"></div></div><div class="cipher-count">23</div></div>
+    <div class="cipher-row"><div class="cipher-label">AES256-GCM-SHA384</div><div class="cipher-bar-wrap"><div class="cipher-bar" style="width:39%;background:linear-gradient(90deg,#e67e22,#d35400);animation-delay:.4s"></div></div><div class="cipher-count">19</div></div>
+    <div class="cipher-row"><div class="cipher-label" style="color:#e74c3c;">TLS_RSA_WITH_DES_CBC_SHA</div><div class="cipher-bar-wrap"><div class="cipher-bar" style="width:18%;background:linear-gradient(90deg,#c0392b,#922b21);animation-delay:.5s"></div></div><div class="cipher-count">9</div></div>
+  </div>
+  <div class="cbom-card" style="animation-delay:.2s"><h4>Top Certificate Authorities</h4><div style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="flex:1;background:#2980b9;border-radius:4px;padding:5px 10px;font-size:12px;color:#fff;">DigiCert</div><div style="font-family:'Orbitron';font-size:16px;color:#fff;font-weight:700;margin-left:8px;">39</div></div><div style="display:flex;align-items:center;justify-content:space-between;"><div style="flex:.7;background:#27ae60;border-radius:4px;padding:5px 10px;font-size:12px;color:#fff;">Thawte</div><div style="font-family:'Orbitron';font-size:16px;color:#fff;font-weight:700;margin-left:8px;">29</div></div></div><div class="legend" style="margin-top:10px;"><div class="legend-item"><div class="dot" style="background:#27ae60"></div>Let's Encrypt</div><div class="legend-item"><div class="dot" style="background:#3498db"></div>Other 16%</div><div class="legend-item"><div class="dot" style="background:#7f8c8d"></div>COMODO</div></div></div>
+  <div class="cbom-card" style="animation-delay:.25s"><h4>Encryption Protocols</h4><div class="donut-wrap"><div class="donut"><svg width="80" height="80" viewBox="0 0 36 36"><circle cx="18" cy="18" r="13" fill="none" stroke="#3498db" stroke-width="6" stroke-dasharray="73 27"/><circle cx="18" cy="18" r="13" fill="none" stroke="#e74c3c" stroke-width="6" stroke-dasharray="9 91" stroke-dashoffset="-73"/></svg><div class="donut-label" style="font-size:11px;">TLS</div></div><div class="legend"><div class="legend-item"><div class="dot" style="background:#3498db"></div>TLS 1.2 — 20%</div><div class="legend-item"><div class="dot" style="background:#e74c3c"></div>TLS 1.1 — 8%</div></div></div></div>
+</div>
+<div class="dash-card"><h4 style="color:var(--gold-light);margin-bottom:10px;">Top Certificate Authorities – Per Application</h4><table class="data-table"><thead><tr><th>Application</th><th>Key Length</th><th>Cipher</th><th>Certificate Authority</th></tr></thead><tbody><tr><td>portal.company.com</td><td>2048-Bit</td><td>ECDHE-RSA-AES256-GCM-SHA384</td><td>DigiCert</td></tr><tr><td>portal.company.com</td><td>1024-Bit</td><td style="color:#e74c3c;">TLS_RSA_WITH_DES_CBC_SHA</td><td>COMODO</td></tr><tr><td>vpn.company.com</td><td>4096-Bit</td><td>ECDHE-RSA-AES256-GCM-SHA384</td><td>COMODO</td></tr></tbody></table></div>
+</div>
+
+<!-- POSTURE OF PQC -->
+<div id="page-pqc" class="page">
+<style>
+.pqc-top{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.pqc-chart-card{flex:1;min-width:180px;background:rgba(0,0,40,0.5);border-radius:10px;padding:14px;animation:fadeInUp .5s ease both;transition:transform .25s;}
+.pqc-chart-card:hover{transform:translateY(-4px);}
+.pqc-chart-card h4{font-size:13px;color:var(--gold-light);margin-bottom:10px;}
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;width:120px;height:80px;}
+.risk-cell{border-radius:4px;transition:transform .2s;}
+.risk-cell:hover{transform:scale(1.1);}
+.risk-high{background:#c0392b;}.risk-medium{background:#e67e22;}.risk-low{background:#27ae60;}
+.recommend-card{background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;margin-top:12px;animation:fadeInUp .6s ease;}
+.recommend-card h4{font-size:13px;color:var(--gold-light);margin-bottom:8px;}
+.rec-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,200,100,0.1);font-size:12px;color:#fff;transition:background .2s,padding-left .2s;}
+.rec-item:hover{background:rgba(255,200,100,0.08);padding-left:8px;}
+.rec-icon{font-size:14px;}
+.progress-bar-wrap{background:rgba(255,255,255,0.15);border-radius:4px;height:8px;margin:4px 0;}
+.progress-bar{height:8px;border-radius:4px;background:var(--btn-gold);animation:progressFill .9s ease both;}
+</style>
+<div class="page-title">PQC Compliance Dashboard</div>
+<div style="background:rgba(0,0,40,0.5);border-radius:10px;padding:10px 20px;margin-bottom:14px;display:flex;gap:20px;align-items:center;font-size:13px;animation:fadeInDown .5s ease;">
+  <span style="color:var(--gold-light);font-weight:700;">Elite-PQC Ready: <span style="color:#27ae60;">45%</span></span>
+  <span style="color:rgba(255,255,255,0.5);">|</span><span style="color:#fff;">Standard: 30%</span>
+  <span style="color:rgba(255,255,255,0.5);">|</span><span style="color:#fff;">Legacy: 15%</span>
+  <span style="color:rgba(255,255,255,0.5);">|</span><span style="color:#e74c3c;">Critical Apps: 8</span>
+</div>
+<div class="pqc-top">
+  <div class="pqc-chart-card" style="animation-delay:.05s"><h4>Assets by Classification Grade</h4><div style="display:flex;align-items:flex-end;gap:20px;height:80px;padding-top:10px;"><div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="height:60px;width:40px;background:#27ae60;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:14px;color:#fff;font-weight:700;">37</div><div style="font-size:11px;color:rgba(255,255,255,0.7)">Elite</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="height:20px;width:40px;background:#c0392b;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:14px;color:#fff;font-weight:700;">2</div><div style="font-size:11px;color:rgba(255,255,255,0.7)">Critical</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="height:30px;width:40px;background:#8e44ad;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:14px;color:#fff;font-weight:700;">4</div><div style="font-size:11px;color:rgba(255,255,255,0.7)">Std</div></div></div></div>
+  <div class="pqc-chart-card" style="animation-delay:.1s"><h4>Application Status</h4><div class="donut-wrap"><svg width="100" height="100" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#27ae60" stroke-width="7" stroke-dasharray="28.3 56.7"/><circle cx="18" cy="18" r="14" fill="none" stroke="#f39c12" stroke-width="7" stroke-dasharray="18.8 66.2" stroke-dashoffset="-28.3"/><circle cx="18" cy="18" r="14" fill="none" stroke="#e67e22" stroke-width="7" stroke-dasharray="9.4 75.6" stroke-dashoffset="-47.1"/><circle cx="18" cy="18" r="14" fill="none" stroke="#c0392b" stroke-width="7" stroke-dasharray="9.4 75.6" stroke-dashoffset="-56.5"/></svg><div class="legend"><div class="legend-item"><div class="dot" style="background:#27ae60"></div>Elite-PQC Ready 45%</div><div class="legend-item"><div class="dot" style="background:#f39c12"></div>Standard 30%</div><div class="legend-item"><div class="dot" style="background:#e67e22"></div>Legacy 15%</div><div class="legend-item"><div class="dot" style="background:#c0392b"></div>Critical</div></div></div></div>
+  <div class="pqc-chart-card" style="animation-delay:.15s"><h4>Risk Overview</h4><div class="risk-grid"><div class="risk-cell risk-high"></div><div class="risk-cell risk-medium"></div><div class="risk-cell risk-medium"></div><div class="risk-cell risk-low"></div></div><div class="legend" style="margin-top:8px;"><div class="legend-item"><div class="dot" style="background:#c0392b"></div>High Risk</div><div class="legend-item"><div class="dot" style="background:#e67e22"></div>Medium Risk</div><div class="legend-item"><div class="dot" style="background:#27ae60"></div>Safe</div></div></div>
+  <div class="pqc-chart-card" style="animation-delay:.2s"><h4>App A Details</h4><div style="font-size:12px;color:#fff;display:flex;flex-direction:column;gap:6px;"><div>👤 Owner: Team 1</div><div>📍 Exposure: Internet</div><div>🔒 TLS: RSA / ECC</div><div>📊 Score: <span style="color:#e74c3c;font-weight:700;">480 (Critical)</span></div><div>⏱ Status: Legacy</div></div></div>
+</div>
+<div class="dash-card" style="margin-bottom:14px;"><table class="data-table"><thead><tr><th>Assets Name</th><th>PQC Support</th></tr></thead><tbody><tr><td>Digigrihavatika.pnbuat.bank.in (103.109.225.128)</td><td style="color:#2ecc71;">✔</td></tr><tr><td>wcw.pnb.bank.in (103.109.225.201)</td><td style="color:#2ecc71;">✔</td></tr><tr><td>Wbbgb.pnbuk.bank.in (103.109.224.249)</td><td style="color:#e74c3c;">✖</td></tr></tbody></table></div>
+<div class="recommend-card"><h4>Improvement Recommendations</h4><div class="rec-item"><span class="rec-icon">⚠️</span> Upgrade to TLS 1.3 with PQC</div><div class="rec-item"><span class="rec-icon">🔑</span> Implement Kyber for Key Exchange</div><div class="rec-item"><span class="rec-icon">📚</span> Update Cryptographic Libraries</div><div class="rec-item"><span class="rec-icon">🗺</span> Develop PQC Migration Plan</div></div>
+</div>
+
+<!-- CYBER RATING -->
+<div id="page-rating" class="page">
+<style>
+.rating-score-card{background:rgba(60,20,20,0.6);border:1px solid rgba(240,165,0,0.3);border-radius:12px;padding:24px;margin-bottom:14px;text-align:center;animation:scaleIn .6s ease;}
+.score-big{font-family:'Orbitron',sans-serif;font-size:48px;font-weight:900;background:linear-gradient(135deg,#fff,var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:glow 3s ease-in-out infinite;}
+.score-badge{display:inline-block;padding:6px 20px;border-radius:6px;background:#27ae60;color:#fff;font-family:'Orbitron';font-size:13px;font-weight:700;margin-left:10px;animation:pulse 2s infinite;}
+.tier-table{width:100%;border-collapse:collapse;font-size:12px;}
+.tier-table th{background:rgba(180,120,0,0.5);color:var(--gold-light);padding:9px 14px;text-align:left;font-weight:700;}
+.tier-table td{padding:9px 14px;color:#fff;border-bottom:1px solid rgba(255,200,100,0.1);vertical-align:top;transition:background .2s;}
+.tier-table tr:hover td{background:rgba(255,220,150,0.08);}
+</style>
+<div class="page-title">Cyber Rating</div>
+<div class="rating-score-card">
+  <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:8px;">Consolidated Enterprise-Level Cyber-Rating Score</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
+    <div class="score-big">755/1000</div>
+    <div class="score-badge">Elite-PQC — Stronger Security Posture</div>
+  </div>
+</div>
+<div class="dash-card" style="margin-bottom:14px;"><table class="tier-table"><thead><tr><th>Status</th><th>PQC Rating For Enterprise</th></tr></thead><tbody><tr><td>🔴 Legacy</td><td>&lt; 400</td></tr><tr><td>🔶 Standard</td><td>400 – 700</td></tr><tr><td>✅ Elite-PQC</td><td>&gt; 700</td></tr><tr><td colspan="2" style="color:var(--gold-light);font-size:12px;"><strong>Maximum Score after normalisation*: 1000</strong></td></tr></tbody></table></div>
+<div class="dash-card" style="margin-bottom:14px;"><table class="data-table"><thead><tr><th>URL</th><th>PQC Score</th></tr></thead><tbody><tr><td>Abc.com</td><td><span style="font-family:'Orbitron';font-size:14px;font-weight:700;">100</span></td></tr><tr><td>Add.com</td><td><span style="font-family:'Orbitron';font-size:14px;font-weight:700;">50</span></td></tr><tr><td>Acc.com</td><td><span style="font-family:'Orbitron';font-size:14px;font-weight:700;">0</span></td></tr></tbody></table></div>
+<div class="dash-card"><table class="tier-table"><thead><tr><th>Tier</th><th>Security Level</th><th>Compliance Criteria</th><th>Priority/Action</th></tr></thead><tbody>
+  <tr><td>Tier-1 Elite</td><td>Modern best-practice crypto posture</td><td>TLS 1.2/1.3 only; Strong Ciphers (AES-GCM/ChaCha20); Forward Secrecy (ECDHE); cert &gt;2048-bit; HSTS enabled</td><td>Maintain configuration; periodic monitoring</td></tr>
+  <tr><td>Tier-2 Standard</td><td>Acceptable enterprise configuration</td><td>TLS 1.2 supported; Key &gt;2048-bit; mostly strong ciphers</td><td>Improve gradually; disable legacy protocols</td></tr>
+  <tr><td>Tier-3 Legacy</td><td>Weak but operational</td><td>TLS 1.0/1.1 enabled; weak ciphers (CBC, 3DES); Key possibly 1024-bit</td><td>Remediation required; upgrade TLS stack</td></tr>
+  <tr><td style="color:#e74c3c;font-weight:700;">Critical</td><td>Insecure / exploitable</td><td>SSL v2/v3 enabled; Key &lt;1024-bit; known vulnerabilities</td><td>Immediate action: block or isolate service</td></tr>
+</tbody></table></div>
+</div>
+
+<!-- REPORTING -->
+<div id="page-reporting" class="page">
+<style>
+.report-cards{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;padding:30px;}
+.report-card{width:170px;height:200px;background:rgba(255,255,255,0.08);border:1px solid rgba(240,165,0,0.25);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;transition:transform .25s,background .25s,box-shadow .25s;animation:scaleIn .5s ease both;}
+.report-card:hover{transform:scale(1.08);background:rgba(255,255,255,0.18);box-shadow:0 8px 30px rgba(240,165,0,0.3);}
+.report-card .ri{font-size:48px;transition:transform .3s;}
+.report-card:hover .ri{transform:scale(1.2) rotate(-5deg);}
+.report-card .rl{font-size:13px;font-weight:700;color:var(--gold-light);text-align:center;}
+.form-card{background:rgba(255,255,255,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:12px;padding:24px;max-width:820px;animation:fadeInUp .5s ease;}
+.form-card h3{font-family:'Orbitron';font-size:16px;color:var(--gold-light);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:12px;color:rgba(255,255,255,0.7);font-weight:600;}
+.form-group select,.form-group input[type="text"],.form-group input[type="email"],.form-group input[type="date"]{padding:9px 12px;border-radius:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,200,100,0.3);color:#fff;font-family:'Rajdhani';font-size:13px;outline:none;transition:border-color .3s,box-shadow .3s;}
+.form-group select:focus,.form-group input:focus{border-color:var(--gold);box-shadow:0 0 8px rgba(240,165,0,0.3);}
+.form-group select option{background:#3a0000;}
+.checkbox-group{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;}
+.checkbox-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#fff;cursor:pointer;}
+.checkbox-item input{accent-color:var(--gold);}
+.toggle-wrap{display:flex;align-items:center;justify-content:space-between;}
+.toggle{width:44px;height:22px;border-radius:11px;background:var(--gold);position:relative;cursor:pointer;}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:2px;right:2px;transition:.2s;}
+.btn-schedule{padding:11px 28px;border-radius:8px;border:none;cursor:pointer;background:var(--btn-gold);color:#7a0000;font-family:'Orbitron';font-size:13px;font-weight:700;transition:transform .15s,box-shadow .15s;margin-top:12px;}
+.btn-schedule:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(240,165,0,0.5);}
+.exec-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.exec-block{background:rgba(255,255,255,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:12px;padding:16px;animation:fadeInUp .5s ease both;transition:transform .25s;}
+.exec-block:hover{transform:translateY(-4px);}
+.exec-block h4{font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.exec-big{font-family:'Orbitron';font-size:28px;color:#fff;font-weight:700;}
+.tier-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;margin:3px;transition:transform .2s;}
+.tier-badge:hover{transform:scale(1.05);}
+.tier-a{background:#27ae60;color:#fff;}.tier-b{background:#2980b9;color:#fff;}.tier-c{background:#f39c12;color:#fff;}.tier-d{background:#e74c3c;color:#fff;}
+</style>
+<div id="report-main">
+  <div class="page-title">Reporting</div>
+  <div class="report-cards">
+    <div class="report-card" style="animation-delay:.05s" onclick="showReportSub('exec')"><div class="ri">📋</div><div class="rl">Executives<br>Reporting</div></div>
+    <div class="report-card" style="animation-delay:.1s" onclick="showReportSub('schedule')"><div class="ri">📅</div><div class="rl">Scheduled<br>Reporting</div></div>
+    <div class="report-card" style="animation-delay:.15s" onclick="showReportSub('ondemand')"><div class="ri">🔍</div><div class="rl">On-Demand<br>Reporting</div></div>
+  </div>
+</div>
+<div id="report-exec" style="display:none;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="btn-sm btn-outline" onclick="backToReports()">← Back</button><div class="page-title" style="margin:0">Executive Report</div></div>
+  <div class="exec-grid">
+    <div class="exec-block" style="animation-delay:.05s"><h4>🔍 Assets Discovery</h4><div class="exec-big">212,450</div><div style="font-size:11px;color:rgba(255,255,255,0.6);">domains, IPs &amp; subdomains</div><div style="font-size:13px;color:#fff;margin-top:4px;"><strong>13,372</strong> cloud assets</div></div>
+    <div class="exec-block" style="animation-delay:.1s"><h4>⭐ Cyber Rating</h4><div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;"><div class="tier-badge tier-a">A — Tier 1 — Excellent</div><div class="tier-badge tier-b">B — Tier 2 — Good</div><div class="tier-badge tier-c">C — Tier 3 — Satisfactory</div><div class="tier-badge tier-d">D — Tier 4 — Needs Improvement</div></div></div>
+    <div class="exec-block" style="animation-delay:.15s"><h4>🛡 Assets Inventory</h4><div style="font-size:12px;color:#fff;display:flex;flex-direction:column;gap:5px;margin-top:6px;"><div>🔒 SSL Certificates: <strong>8,761</strong></div><div>💾 Software: <strong>13,211</strong></div><div>📡 IoT Devices: <strong>3,854</strong></div><div>🔑 Login Forms: <strong>1,198</strong></div></div></div>
+    <div class="exec-block" style="animation-delay:.2s"><h4>🚶 Posture of PQC</h4><div style="font-size:12px;color:#fff;margin-bottom:4px;">33%</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:33%;"></div></div><div style="font-size:12px;color:#fff;margin:6px 0 4px;">22%</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:22%;background:#e67e22;"></div></div></div>
+    <div class="exec-block" style="animation-delay:.25s"><h4>📄 CBOM</h4><div class="exec-big" style="color:#e74c3c;">8,248</div><div style="font-size:11px;color:rgba(255,255,255,0.65);">vulnerable components</div></div>
+  </div>
+</div>
+<div id="report-schedule" style="display:none;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="btn-sm btn-outline" onclick="backToReports()">← Back</button><div class="page-title" style="margin:0">Schedule Reporting</div></div>
+  <div class="form-card"><h3>📅 Schedule Reporting</h3><div class="form-grid"><div><div class="form-group"><label>Report Type</label><select><option>Executive Summary Report</option><option>Assets Discovery</option><option>Assets Inventory</option><option>CBOM</option><option>Posture of PQC</option></select></div><div class="form-group" style="margin-top:12px;"><label>Frequency</label><select><option>Weekly</option><option>Daily</option><option>Monthly</option></select></div><div class="form-group" style="margin-top:12px;"><label>Include Sections</label><div class="checkbox-group"><label class="checkbox-item"><input type="checkbox" checked> Discovery</label><label class="checkbox-item"><input type="checkbox" checked> Inventory</label><label class="checkbox-item"><input type="checkbox" checked> CBOM</label><label class="checkbox-item"><input type="checkbox" checked> PQC Posture</label></div></div></div><div><div class="form-group"><label>Date</label><input type="date" value="2026-04-25"></div><div class="form-group" style="margin-top:12px;"><label>Time</label><select><option>09:00 AM (IST)</option><option>12:00 PM (IST)</option><option>06:00 PM (IST)</option></select></div><div style="color:var(--gold-light);font-weight:700;margin:12px 0 8px;">✉ Delivery Options</div><div class="checkbox-group" style="flex-direction:column;gap:8px;"><label class="checkbox-item"><input type="checkbox" checked> Email: <input type="email" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,200,100,0.3);border-radius:4px;padding:3px 8px;color:#fff;font-family:Rajdhani;font-size:12px;margin-left:4px;" value="executives@org.com"></label><label class="checkbox-item"><input type="checkbox" checked> Save to Location: <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:3px;font-size:11px;">/Reports/Quarterly/</code></label></div><button class="btn-schedule">Schedule Report →</button></div></div></div>
+</div>
+<div id="report-ondemand" style="display:none;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><button class="btn-sm btn-outline" onclick="backToReports()">← Back</button><div class="page-title" style="margin:0">On-Demand Reporting</div></div>
+  <div class="form-card"><h3>📊 On-Demand Reporting</h3><div class="form-grid"><div><div class="form-group"><label>Report Type</label><select><option>Select Report</option><option>Executive Reporting</option><option>Assets Discovery</option><option>Assets Inventory</option><option>CBOM</option><option>Posture of PQC</option><option>Cyber Rating</option></select></div><div style="display:flex;gap:10px;margin-top:14px;align-items:center;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>File Format</label><select><option>PDF</option><option>XLSX</option><option>CSV</option></select></div><label class="checkbox-item" style="margin-top:18px;"><input type="checkbox" checked> Include Charts</label><label class="checkbox-item" style="margin-top:18px;"><input type="checkbox"> Password Protect</label></div></div><div><div style="color:var(--gold-light);font-weight:700;margin-bottom:10px;">📤 Delivery Options</div><div class="checkbox-group" style="flex-direction:column;gap:10px;"><div class="toggle-wrap"><label class="checkbox-item"><input type="checkbox" checked> Send via Email</label><div class="toggle"></div></div><input type="email" placeholder="Enter Email Addresses" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,200,100,0.3);border-radius:6px;padding:8px;color:#fff;font-family:Rajdhani;font-size:12px;width:100%"><label class="checkbox-item"><input type="checkbox"> Download Link 🔗</label><label class="checkbox-item"><input type="checkbox"> Slack Notification 💬</label></div><button class="btn-schedule" style="width:100%;">📊 Generate Report</button></div></div></div>
+</div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /body -->
+<div class="footer" id="footer" style="display:none;"><span>11/03/2026</span><span>PNB Hackathon 2026</span></div>
+</div>
+
+<!-- ADD ASSET MODAL -->
+<div id="add-asset-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;">
+<div id="modal-box" style="background:linear-gradient(135deg,#0d1b2a,#1a1a2e);border:1px solid rgba(240,165,0,0.4);border-radius:16px;width:680px;max-width:95vw;max-height:90vh;overflow-y:auto;padding:28px;animation:scaleIn .3s ease;box-shadow:0 20px 60px rgba(0,0,0,0.8);">
+
+  <!-- Step 1: URL Input -->
+  <div id="modal-step1">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-family:'Orbitron';font-size:16px;color:var(--gold-light);">+ Add New Asset</div>
+      <span onclick="closeAddAssetModal()" style="cursor:pointer;font-size:20px;color:rgba(255,255,255,0.5);transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">✕</span>
+    </div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;">Enter a URL to analyse its security posture, TLS configuration, certificate details and risk level.</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <input id="asset-url-input" type="text" placeholder="https://example.com" style="flex:1;padding:12px 16px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:15px;outline:none;transition:border-color .3s,box-shadow .3s;" onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 12px rgba(240,165,0,0.3)'" onblur="this.style.borderColor='rgba(255,200,100,0.4)';this.style.boxShadow='none'" onkeydown="if(event.key==='Enter')analyseAsset()">
+      <button onclick="analyseAsset()" style="padding:12px 22px;background:var(--btn-gold);border:none;border-radius:8px;font-family:'Orbitron';font-size:13px;font-weight:700;color:#111;cursor:pointer;transition:transform .15s,box-shadow .15s;white-space:nowrap;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(240,165,0,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">🔍 Analyse</button>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      <span style="font-size:11px;color:rgba(255,255,255,0.4);">Quick add:</span>
+      <span onclick="document.getElementById('asset-url-input').value='https://portal.pnb.bank.in'" style="font-size:11px;color:var(--gold-light);cursor:pointer;text-decoration:underline;">portal.pnb.bank.in</span>
+      <span onclick="document.getElementById('asset-url-input').value='https://api.pnb.bank.in'" style="font-size:11px;color:var(--gold-light);cursor:pointer;text-decoration:underline;">api.pnb.bank.in</span>
+      <span onclick="document.getElementById('asset-url-input').value='https://vpn.pnb.bank.in'" style="font-size:11px;color:var(--gold-light);cursor:pointer;text-decoration:underline;">vpn.pnb.bank.in</span>
+    </div>
+  </div>
+
+  <!-- Step 2: Scanning Animation -->
+  <div id="modal-step2" style="display:none;text-align:center;padding:30px 0;">
+    <div style="font-size:40px;animation:spin 1s linear infinite;display:inline-block;">⚙️</div>
+    <div style="font-family:'Orbitron';font-size:15px;color:var(--gold-light);margin:16px 0 8px;" id="scan-status-text">Initialising scan...</div>
+    <div style="background:rgba(255,255,255,0.1);border-radius:6px;height:6px;width:300px;margin:0 auto;overflow:hidden;">
+      <div id="scan-progress-bar" style="height:6px;background:var(--btn-gold);border-radius:6px;width:0%;transition:width .4s ease;"></div>
+    </div>
+    <div id="scan-log" style="margin-top:16px;font-family:'Share Tech Mono';font-size:11px;color:rgba(255,255,255,0.5);text-align:left;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.8;"></div>
+  </div>
+
+  <!-- Step 3: Results -->
+  <div id="modal-step3" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-family:'Orbitron';font-size:15px;color:var(--gold-light);">📊 Analysis Results</div>
+      <span onclick="closeAddAssetModal()" style="cursor:pointer;font-size:20px;color:rgba(255,255,255,0.5);" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">✕</span>
+    </div>
+
+    <!-- URL + Risk Badge -->
+    <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);">Analysed URL</div>
+        <div id="res-url" style="font-family:'Share Tech Mono';font-size:14px;color:#fff;margin-top:2px;"></div>
+      </div>
+      <div id="res-risk-badge" style="padding:6px 18px;border-radius:6px;font-family:'Orbitron';font-size:13px;font-weight:700;"></div>
+    </div>
+
+    <!-- Stats Row -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+      <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);">TLS Version</div>
+        <div id="res-tls" style="font-family:'Orbitron';font-size:16px;color:#fff;font-weight:700;margin-top:4px;"></div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);">Key Length</div>
+        <div id="res-key" style="font-family:'Orbitron';font-size:16px;color:#fff;font-weight:700;margin-top:4px;"></div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);">Cert Status</div>
+        <div id="res-cert" style="font-family:'Orbitron';font-size:13px;font-weight:700;margin-top:4px;"></div>
+      </div>
+      <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);">PQC Score</div>
+        <div id="res-pqc" style="font-family:'Orbitron';font-size:16px;color:#fff;font-weight:700;margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <!-- Details Table -->
+    <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:12px;color:var(--gold-light);font-weight:700;margin-bottom:10px;">Security Details</div>
+      <table style="width:100%;font-size:12px;border-collapse:collapse;">
+        <tbody id="res-details-table"></tbody>
+      </table>
+    </div>
+
+    <!-- Recommendations -->
+    <div id="res-recommendations" style="background:rgba(255,200,0,0.06);border:1px solid rgba(255,200,100,0.2);border-radius:10px;padding:14px;margin-bottom:18px;">
+      <div style="font-size:12px;color:var(--gold-light);font-weight:700;margin-bottom:8px;">⚡ Recommendations</div>
+      <div id="res-rec-list"></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeAddAssetModal()" style="padding:10px 20px;background:transparent;border:1px solid rgba(255,200,100,0.4);border-radius:8px;color:#fff;font-family:'Rajdhani';font-size:13px;font-weight:600;cursor:pointer;">Cancel</button>
+      <button onclick="addAssetToTable()" style="padding:10px 24px;background:var(--btn-gold);border:none;border-radius:8px;font-family:'Orbitron';font-size:13px;font-weight:700;color:#111;cursor:pointer;transition:transform .15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">✔ Add to Inventory</button>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+/* ── ADD ASSET MODAL ── */
+let currentAnalysis = {};
+
+function openAddAssetModal() {
+  const modal = document.getElementById('add-asset-modal');
+  modal.style.display = 'flex';
+  showModalStep(1);
+  document.getElementById('asset-url-input').value = '';
+  document.getElementById('asset-url-input').focus();
+}
+
+function closeAddAssetModal() {
+  document.getElementById('add-asset-modal').style.display = 'none';
+}
+
+function showModalStep(n) {
+  [1,2,3].forEach(i => {
+    document.getElementById('modal-step'+i).style.display = i===n ? 'block' : 'none';
+  });
+}
+
+function analyseAsset() {
+  let url = document.getElementById('asset-url-input').value.trim();
+  if (!url) { document.getElementById('asset-url-input').style.borderColor='#e74c3c'; return; }
+  if (!url.startsWith('http')) url = 'https://' + url;
+
+  showModalStep(2);
+
+  const steps = [
+    [10, 'Resolving DNS...'],
+    [25, 'Connecting to host...'],
+    [40, 'Fetching TLS certificate...'],
+    [55, 'Analysing cipher suites...'],
+    [70, 'Checking PQC readiness...'],
+    [85, 'Evaluating risk posture...'],
+    [100, 'Analysis complete ✔'],
+  ];
+
+  const bar = document.getElementById('scan-progress-bar');
+  const statusText = document.getElementById('scan-status-text');
+  const log = document.getElementById('scan-log');
+  log.innerHTML = '';
+  let i = 0;
+
+  function runStep() {
+    if (i >= steps.length) {
+      setTimeout(() => showResults(url), 400);
+      return;
+    }
+    const [pct, msg] = steps[i];
+    bar.style.width = pct + '%';
+    statusText.textContent = msg;
+    log.innerHTML += `<div style="animation:fadeIn .3s ease">› ${msg}</div>`;
+    i++;
+    setTimeout(runStep, 500);
+  }
+  runStep();
+}
+
+function showResults(url) {
+  // Simulate analysis based on URL characteristics
+  const hostname = url.replace(/https?:\/\//,'').split('/')[0];
+  const seed = hostname.split('').reduce((a,c) => a + c.charCodeAt(0), 0);
+
+  const tlsOptions = ['1.3','1.3','1.2','1.2','1.1','1.0'];
+  const keyOptions = ['4096-bit','3072-bit','2048-bit','2048-bit','1024-bit'];
+  const cipherOptions = ['ECDHE-RSA-AES256-GCM-SHA384','TLS_AES_256_GCM_SHA384','ECDHE-ECDSA-AES128-GCM-SHA256','TLS_RSA_WITH_AES_256_CBC_SHA','TLS_RSA_WITH_DES_CBC_SHA'];
+  const caOptions = ['DigiCert','Let\'s Encrypt','GlobalSign','Sectigo','COMODO'];
+  const certOptions = [{label:'✔ Valid', color:'#27ae60'},{label:'⚠ Expiring Soon', color:'#f39c12'},{label:'✖ Expired', color:'#e74c3c'}];
+
+  const tls = tlsOptions[seed % tlsOptions.length];
+  const key = keyOptions[seed % keyOptions.length];
+  const cipher = cipherOptions[seed % cipherOptions.length];
+  const ca = caOptions[seed % caOptions.length];
+  const cert = certOptions[seed % certOptions.length];
+  const ipv4 = `${(seed*3)%200+10}.${(seed*7)%255}.${(seed*11)%255}.${(seed*13)%255}`;
+  const pqcScore = Math.min(100, Math.max(0, 100 - (seed % 80)));
+
+  // Risk calculation
+  let risk = 'Low', riskColor = '#27ae60';
+  if (tls === '1.0' || key === '1024-bit') { risk = 'Critical'; riskColor = '#7b0000'; }
+  else if (tls === '1.1' || cipher.includes('DES')) { risk = 'High'; riskColor = '#c0392b'; }
+  else if (tls === '1.2' && key === '2048-bit') { risk = 'Medium'; riskColor = '#e67e22'; }
+
+  currentAnalysis = { url, hostname, tls, key, cipher, ca, cert, ipv4, pqcScore, risk, riskColor };
+
+  // Populate results
+  document.getElementById('res-url').textContent = url;
+  document.getElementById('res-risk-badge').textContent = risk;
+  document.getElementById('res-risk-badge').style.background = riskColor;
+  document.getElementById('res-risk-badge').style.color = '#fff';
+  document.getElementById('res-tls').textContent = 'TLS '+tls;
+  document.getElementById('res-tls').style.color = tls==='1.3'?'#27ae60':tls==='1.2'?'#f39c12':'#e74c3c';
+  document.getElementById('res-key').textContent = key;
+  document.getElementById('res-key').style.color = key==='4096-bit'||key==='3072-bit'?'#27ae60':key==='2048-bit'?'#f39c12':'#e74c3c';
+  document.getElementById('res-cert').textContent = cert.label;
+  document.getElementById('res-cert').style.color = cert.color;
+  document.getElementById('res-pqc').textContent = pqcScore+'/100';
+  document.getElementById('res-pqc').style.color = pqcScore>70?'#27ae60':pqcScore>40?'#f39c12':'#e74c3c';
+
+  const rows = [
+    ['Hostname', hostname],
+    ['IPv4 Address', ipv4],
+    ['Cipher Suite', cipher],
+    ['Certificate Authority', ca],
+    ['Certificate Expiry', cert.label],
+    ['HSTS Enabled', tls==='1.3'?'✔ Yes':'✖ No'],
+    ['Forward Secrecy', cipher.includes('ECDHE')?'✔ Yes':'✖ No'],
+    ['PQC Ready', pqcScore>60?'✔ Yes':'✖ No'],
+  ];
+  document.getElementById('res-details-table').innerHTML = rows.map(([k,v],i) =>
+    `<tr style="border-bottom:1px solid rgba(255,200,100,0.08);animation:rowSlideIn .3s ease ${i*0.05}s both">
+      <td style="padding:6px 0;color:rgba(255,255,255,0.5);width:45%">${k}</td>
+      <td style="padding:6px 0;color:#fff;font-weight:600">${v}</td>
+    </tr>`
+  ).join('');
+
+  // Recommendations
+  const recs = [];
+  if (tls !== '1.3') recs.push('🔒 Upgrade to TLS 1.3 for stronger security');
+  if (key === '1024-bit' || key === '2048-bit') recs.push('🔑 Increase key length to 4096-bit');
+  if (cipher.includes('DES') || cipher.includes('CBC')) recs.push('⚠️ Replace weak cipher suite with AES-GCM');
+  if (pqcScore < 60) recs.push('🚀 Implement post-quantum cryptography (Kyber/Dilithium)');
+  if (cert.label.includes('Expiring') || cert.label.includes('Expired')) recs.push('📋 Renew SSL certificate immediately');
+  if (recs.length === 0) recs.push('✅ Asset meets current security standards. Monitor regularly.');
+
+  document.getElementById('res-rec-list').innerHTML = recs.map(r =>
+    `<div style="padding:5px 0;font-size:12px;color:#fff;border-bottom:1px solid rgba(255,200,100,0.08);">${r}</div>`
+  ).join('');
+
+  showModalStep(3);
+}
+
+function addAssetToTable() {
+  const a = currentAnalysis;
+  if (!a.url) return;
+
+  const riskClass = {Critical:'badge-critical',High:'badge-high',Medium:'badge-medium',Low:'badge-low'}[a.risk];
+  const certClass = a.cert.label.includes('Expiring') ? 'cert-expiring' : a.cert.label.includes('Expired') ? 'cert-expired' : 'cert-valid';
+  const today = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+
+  // Add to Home dashboard table
+  const homeTbody = document.querySelector('#page-home .data-table tbody');
+  if (homeTbody) {
+    const tr = document.createElement('tr');
+    tr.style.animation = 'rowSlideIn .4s ease';
+    tr.innerHTML = `
+      <td>☐</td><td>${a.hostname}</td>
+      <td><a href="${a.url}" target="_blank" style="color:var(--gold-light)">${a.url}</a></td>
+      <td>${a.ipv4}</td><td>—</td><td>Web App</td><td>IT</td>
+      <td><span class="badge ${riskClass}">${a.risk}</span></td>
+      <td class="${certClass}">${a.cert.label}</td>
+      <td>${a.key}</td><td>Just now</td>
+      <td><button class="btn-delete" onclick="deleteAssetRow(this)">🗑</button></td>`;
+    homeTbody.appendChild(tr);
+  }
+
+  // Add to Inventory Domains table
+  const invTbody = document.querySelector('#inv-domains-table tbody');
+  if (invTbody) {
+    const tr2 = document.createElement('tr');
+    tr2.style.animation = 'rowSlideIn .4s ease';
+    tr2.innerHTML = `
+      <td>${today}</td><td>${a.hostname}</td>
+      <td>${today}</td><td>National Internet Exchange of India</td>
+      <td>PNB</td><td><span class="badge ${riskClass}">${a.risk}</span></td>`;
+    invTbody.appendChild(tr2);
+  }
+
+  // Update KPI counter
+  const kpi = document.querySelector('.kpi-val[data-count]');
+  if (kpi) { const n = parseInt(kpi.textContent)+1; kpi.textContent = n; kpi.dataset.count = n; }
+
+  closeAddAssetModal();
+
+  // Success toast
+  const toast = document.createElement('div');
+  toast.textContent = '✔ Asset added to inventory';
+  toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:#27ae60;color:#fff;padding:12px 22px;border-radius:8px;font-family:Orbitron;font-size:13px;font-weight:700;z-index:99999;animation:fadeInUp .3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.4)';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// Close modal on backdrop click
+document.getElementById('add-asset-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeAddAssetModal();
+});
+</script>
+
+<script>
+/* ── SCAN ALL ASSETS ── */
+let scanResults = [];
+
+function scanAllAssets() {
+  const modal = document.getElementById('scan-all-modal');
+  modal.style.display = 'flex';
+  document.getElementById('scan-all-log-body').innerHTML = '';
+  document.getElementById('scan-all-summary').style.display = 'none';
+  document.getElementById('scan-all-close-btn').style.pointerEvents = 'none';
+  document.getElementById('scan-all-close-btn').style.opacity = '0.3';
+  document.getElementById('scan-all-bar').style.width = '0%';
+  document.getElementById('scan-all-pct').textContent = '0%';
+  document.getElementById('scan-all-status').textContent = 'Initialising scan...';
+  scanResults = [];
+
+  // Collect all asset rows from home table
+  const rows = Array.from(document.querySelectorAll('#home-asset-table tbody tr'));
+  const total = rows.length;
+  document.getElementById('scan-all-count').textContent = `0 / ${total} assets scanned`;
+
+  let i = 0;
+  function scanNext() {
+    if (i >= total) {
+      finishScan(total);
+      return;
+    }
+    const row = rows[i];
+    const name = row.cells[1]?.textContent || 'Unknown';
+    const url  = row.cells[2]?.querySelector('a')?.href || '';
+    document.getElementById('scan-all-status').textContent = `Scanning ${name}...`;
+
+    // Simulate per-asset result
+    const seed = name.split('').reduce((a,c) => a + c.charCodeAt(0), 0) + i;
+    const tlsOpts = ['1.3','1.3','1.2','1.2','1.1','1.0'];
+    const keyOpts = ['4096-bit','3072-bit','2048-bit','2048-bit','1024-bit'];
+    const certOpts = [{label:'✔ Valid',color:'#27ae60'},{label:'⚠ Expiring',color:'#f39c12'},{label:'✖ Expired',color:'#e74c3c'}];
+    const tls  = tlsOpts[seed % tlsOpts.length];
+    const key  = keyOpts[seed % keyOpts.length];
+    const cert = certOpts[seed % certOpts.length];
+
+    let risk = 'Low', riskColor = '#27ae60', riskClass = 'badge-low';
+    if (tls === '1.0' || key === '1024-bit') { risk = 'Critical'; riskColor = '#ff4444'; riskClass = 'badge-critical'; }
+    else if (tls === '1.1' || cert.label.includes('Expired')) { risk = 'High'; riskColor = '#e74c3c'; riskClass = 'badge-high'; }
+    else if (tls === '1.2' || cert.label.includes('Expiring')) { risk = 'Medium'; riskColor = '#f39c12'; riskClass = 'badge-medium'; }
+
+    scanResults.push({ row, tls, key, cert, risk, riskClass });
+
+    // Add log row
+    const tr = document.createElement('tr');
+    tr.style.animation = 'rowSlideIn .3s ease';
+    tr.style.borderBottom = '1px solid rgba(255,200,100,0.07)';
+    tr.innerHTML = `
+      <td style="padding:5px 8px;color:#fff;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${name}</td>
+      <td style="padding:5px 8px;color:${tls==='1.3'?'#27ae60':tls==='1.2'?'#f39c12':'#e74c3c'};font-weight:700;">TLS ${tls}</td>
+      <td style="padding:5px 8px;color:${key==='4096-bit'||key==='3072-bit'?'#27ae60':key==='2048-bit'?'#f39c12':'#e74c3c'};">${key}</td>
+      <td style="padding:5px 8px;color:${cert.color};">${cert.label}</td>
+      <td style="padding:5px 8px;"><span class="badge ${riskClass}">${risk}</span></td>
+      <td style="padding:5px 8px;color:#27ae60;font-size:13px;">✔ Done</td>`;
+    document.getElementById('scan-all-log-body').appendChild(tr);
+
+    // Auto-scroll log
+    const wrap = document.getElementById('scan-all-log-wrap');
+    wrap.scrollTop = wrap.scrollHeight;
+
+    i++;
+    const pct = Math.round((i / total) * 100);
+    document.getElementById('scan-all-bar').style.width = pct + '%';
+    document.getElementById('scan-all-pct').textContent = pct + '%';
+    document.getElementById('scan-all-count').textContent = `${i} / ${total} assets scanned`;
+    const remaining = (total - i) * 0.4;
+    document.getElementById('scan-all-eta').textContent = remaining > 0 ? `~${remaining.toFixed(1)}s remaining` : 'Finishing...';
+
+    setTimeout(scanNext, 400);
+  }
+  setTimeout(scanNext, 300);
+}
+
+function finishScan(total) {
+  document.getElementById('scan-all-status').textContent = `✔ Scan complete — ${total} assets scanned`;
+  document.getElementById('scan-all-eta').textContent = 'Complete';
+  document.getElementById('scan-all-close-btn').style.pointerEvents = 'auto';
+  document.getElementById('scan-all-close-btn').style.opacity = '1';
+
+  // Tally summary
+  let safe=0, medium=0, high=0, critical=0;
+  scanResults.forEach(r => {
+    if (r.risk==='Low') safe++;
+    else if (r.risk==='Medium') medium++;
+    else if (r.risk==='High') high++;
+    else critical++;
+  });
+  document.getElementById('sum-safe').textContent     = safe;
+  document.getElementById('sum-medium').textContent   = medium;
+  document.getElementById('sum-high').textContent     = high;
+  document.getElementById('sum-critical').textContent = critical;
+  document.getElementById('scan-all-summary').style.display = 'block';
+}
+
+function applyScanResults() {
+  // Update each row in the home table with fresh scan data
+  scanResults.forEach(({ row, tls, key, cert, risk, riskClass }) => {
+    const riskCell = row.cells[7];
+    const certCell = row.cells[8];
+    const keyCell  = row.cells[9];
+    const scanCell = row.cells[10];
+    if (riskCell) riskCell.innerHTML = `<span class="badge ${riskClass}">${risk}</span>`;
+    if (certCell) { certCell.textContent = cert.label; certCell.className = cert.label.includes('Valid') && !cert.label.includes('Expiring') ? 'cert-valid' : cert.label.includes('Expiring') ? 'cert-expiring' : 'cert-expired'; }
+    if (keyCell)  keyCell.textContent = key;
+    if (scanCell) scanCell.textContent = 'Just now';
+    row.style.animation = 'none';
+    row.style.background = 'rgba(240,165,0,0.08)';
+    setTimeout(() => row.style.background = '', 1000);
+  });
+  closeScanAllModal();
+  showToast(`✔ ${scanResults.length} assets updated`, '#27ae60');
+}
+
+function closeScanAllModal() {
+  document.getElementById('scan-all-modal').style.display = 'none';
+}
+
+document.getElementById('scan-all-modal').addEventListener('click', function(e) {
+  if (e.target === this && document.getElementById('scan-all-close-btn').style.pointerEvents !== 'none') closeScanAllModal();
+});
+
+/* ── CERTIFICATE MODAL ── */
+function openCertModal() {
+  const m = document.getElementById('cert-modal');
+  m.style.display = 'flex';
+  document.getElementById('cert-step1').style.display = 'block';
+  document.getElementById('cert-step2').style.display = 'none';
+  document.getElementById('cert-step3').style.display = 'none';
+  // Reset QR panel
+  document.getElementById('cert-qr-loading').style.display = 'flex';
+  document.getElementById('cert-qr-wrap').style.display = 'none';
+  // pre-fill org
+  document.getElementById('cert-org').value = 'Punjab National Bank';
+  document.getElementById('cert-domain').value = '';
+}
+function closeCertModal() {
+  document.getElementById('cert-modal').style.display = 'none';
+}
+function generateCertificate() {
+  const domain = document.getElementById('cert-domain').value.trim();
+  const org    = document.getElementById('cert-org').value.trim();
+  const type   = document.getElementById('cert-type').value;
+  const bits   = document.getElementById('cert-bits').value;
+  if (!domain) { document.getElementById('cert-domain').style.borderColor='#e74c3c'; return; }
+
+  document.getElementById('cert-step1').style.display = 'none';
+  document.getElementById('cert-step2').style.display = 'block';
+
+  const steps = [
+    [15,  'Generating key pair...'],
+    [30,  'Creating CSR (Certificate Signing Request)...'],
+    [50,  'Signing certificate with CA...'],
+    [65,  'Embedding metadata & extensions...'],
+    [80,  'Encoding PEM / DER formats...'],
+    [95,  'Finalising certificate bundle...'],
+    [100, 'Certificate generated ✔'],
+  ];
+  const bar  = document.getElementById('cert-prog-bar');
+  const stat = document.getElementById('cert-prog-text');
+  let i = 0;
+  function run() {
+    if (i >= steps.length) { setTimeout(() => showCertResult(domain, org, type, bits), 400); return; }
+    bar.style.width  = steps[i][0] + '%';
+    stat.textContent = steps[i][1];
+    i++; setTimeout(run, 480);
+  }
+  run();
+}
+
+function showCertResult(domain, org, type, bits) {
+  document.getElementById('cert-step2').style.display = 'none';
+  document.getElementById('cert-step3').style.display = 'block';
+
+  const hex    = () => Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase();
+  const serial = Array.from({length:8}, hex).join(':');
+  const fp     = Array.from({length:20}, hex).join(':');
+  const now    = new Date();
+  const exp    = new Date(now); exp.setFullYear(exp.getFullYear()+1);
+  const fmt    = d => d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const certId = 'PNB-' + Date.now().toString(36).toUpperCase();
+
+  const pemBody = btoa(`CERTIFICATE DATA FOR ${domain}\nOrg: ${org}\nType: ${type}\nBits: ${bits}\nSerial: ${serial}\nIssued: ${fmt(now)}\nExpires: ${fmt(exp)}`);
+  const pem = `-----BEGIN CERTIFICATE-----\n${pemBody.match(/.{1,64}/g).join('\n')}\n-----END CERTIFICATE-----`;
+
+  // Points to dedicated verify.html — opens instantly with full cert details
+  const verifyUrl = `${location.origin}${location.pathname.replace(/[^/]*$/, '')}verify.html?verify=${certId}&domain=${encodeURIComponent(domain)}&org=${encodeURIComponent(org)}&type=${encodeURIComponent(type)}&bits=${bits}&issued=${encodeURIComponent(fmt(now))}&expires=${encodeURIComponent(fmt(exp))}&serial=${encodeURIComponent(serial.slice(0,11))}`;
+
+  // Draw certificate immediately — no waiting
+  _drawCertCanvas(domain, org, type, bits, serial, fp, now, exp, fmt, certId, null);
+
+  // Generate QR image and redraw certificate with it embedded
+  document.getElementById('cert-qr-certid-label').textContent = certId;
+  document.getElementById('cert-qr-id').textContent = certId;
+
+  makeQRDataURL(verifyUrl, 120, function(err, qrImg) {
+    if (!err && qrImg) {
+      _drawCertCanvas(domain, org, type, bits, serial, fp, now, exp, fmt, certId, qrImg);
+    }
+  });
+
+  // Side QR panel
+  makeQRDataURL(verifyUrl, 140, function(err, qrImg) {
+    document.getElementById('cert-qr-loading').style.display = 'none';
+    if (!err && qrImg) {
+      const pc = document.getElementById('cert-qr-canvas');
+      pc.width = 128; pc.height = 128;
+      pc.getContext('2d').drawImage(qrImg, 0, 0, 128, 128);
+      document.getElementById('cert-qr-wrap').style.display = 'flex';
+      window._currentQrCanvas = pc;
+    }
+  });
+
+  window._currentPem = pem;
+  window._currentDomain = domain;
+  document.getElementById('cert-result-domain').textContent = domain;
+  document.getElementById('cert-result-org').textContent    = org;
+  document.getElementById('cert-result-type').textContent   = type + ' / ' + bits + '-bit';
+  document.getElementById('cert-result-serial').textContent = serial;
+  document.getElementById('cert-result-fp').textContent     = fp;
+  document.getElementById('cert-result-issued').textContent = fmt(now);
+  document.getElementById('cert-result-exp').textContent    = fmt(exp);
+  document.getElementById('cert-pem-block').textContent     = pem;
+}
+
+function _drawCertCanvas(domain, org, type, bits, serial, fp, now, exp, fmt, certId, qrImg) {
+  const canvas = document.getElementById('cert-canvas');
+  canvas.width = 560; canvas.height = 640;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  window._certCanvas = canvas;
+
+  // ── BACKGROUND ──
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#07071a'); bg.addColorStop(0.5,'#0d1b2a'); bg.addColorStop(1,'#12172e');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+  // diagonal watermark
+  ctx.save(); ctx.globalAlpha=0.025;
+  for(let i=-H;i<W+H;i+=20){
+    ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i+H,H);
+    ctx.strokeStyle='#f0a500'; ctx.lineWidth=1; ctx.stroke();
+  }
+  ctx.restore();
+
+  // ── BORDERS ──
+  ctx.strokeStyle='#f0a500'; ctx.lineWidth=3; ctx.strokeRect(8,8,W-16,H-16);
+  ctx.strokeStyle='rgba(240,165,0,0.3)'; ctx.lineWidth=1; ctx.strokeRect(14,14,W-28,H-28);
+
+  // corner ornaments
+  [[20,20],[W-20,20],[20,H-20],[W-20,H-20]].forEach(([cx,cy])=>{
+    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2); ctx.fillStyle='#f0a500'; ctx.fill();
+    ctx.strokeStyle='rgba(240,165,0,0.45)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(cx-14,cy); ctx.lineTo(cx+14,cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx,cy-14); ctx.lineTo(cx,cy+14); ctx.stroke();
+  });
+
+  // ── SHIELD ──
+  ctx.save(); ctx.translate(W/2, 58);
+  ctx.fillStyle='rgba(240,165,0,0.12)';
+  ctx.beginPath();
+  ctx.moveTo(0,-26); ctx.lineTo(22,-14); ctx.lineTo(22,6);
+  ctx.quadraticCurveTo(22,22,0,30); ctx.quadraticCurveTo(-22,22,-22,6);
+  ctx.lineTo(-22,-14); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle='#f0a500'; ctx.lineWidth=2; ctx.stroke();
+  ctx.strokeStyle='#f5c842'; ctx.lineWidth=2.5; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(-9,4); ctx.lineTo(-2,12); ctx.lineTo(11,-6); ctx.stroke();
+  ctx.restore();
+
+  // ── HEADER TEXT ──
+  ctx.textAlign='center';
+  ctx.fillStyle='#f5c842'; ctx.font='bold 15px Orbitron,sans-serif';
+  ctx.fillText('CYBERSHIELD · PNB', W/2, 102);
+  ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='9px Rajdhani,sans-serif';
+  ctx.fillText('PUNJAB NATIONAL BANK  ·  HACKATHON 2026', W/2, 117);
+
+  // divider + diamond
+  ctx.strokeStyle='rgba(240,165,0,0.4)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(40,126); ctx.lineTo(W/2-12,126); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W/2+12,126); ctx.lineTo(W-40,126); ctx.stroke();
+  ctx.save(); ctx.translate(W/2,126); ctx.rotate(Math.PI/4);
+  ctx.fillStyle='#f0a500'; ctx.fillRect(-4,-4,8,8); ctx.restore();
+
+  ctx.fillStyle='#fff'; ctx.font='bold 20px Orbitron,sans-serif';
+  ctx.fillText('SECURITY CERTIFICATE', W/2, 152);
+  ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='10px Rajdhani,sans-serif';
+  ctx.fillText('This certifies that the following digital asset has been verified', W/2, 168);
+
+  // ── DOMAIN BOX ──
+  ctx.fillStyle='rgba(240,165,0,0.07)';
+  ctx.beginPath(); roundRect(ctx,30,176,W-60,50,7); ctx.fill();
+  ctx.strokeStyle='rgba(240,165,0,0.3)'; ctx.lineWidth=1;
+  ctx.beginPath(); roundRect(ctx,30,176,W-60,50,7); ctx.stroke();
+  ctx.fillStyle='#f5c842'; ctx.font='bold 17px Orbitron,sans-serif'; ctx.textAlign='center';
+  ctx.fillText(domain, W/2, 200);
+  ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Rajdhani,sans-serif';
+  ctx.fillText(org, W/2, 218);
+
+  // ── DETAILS GRID ──
+  ctx.strokeStyle='rgba(240,165,0,0.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(30,234); ctx.lineTo(W-30,234); ctx.stroke();
+
+  const details=[
+    ['CERT TYPE',type],['KEY SIZE',bits+'-bit'],
+    ['ISSUED',fmt(now)],['EXPIRES',fmt(exp)],
+    ['CERT ID',certId],['STATUS','✔ VALID'],
+  ];
+  ctx.textAlign='left';
+  details.forEach(([k,v],i)=>{
+    const col=i%2===0?36:W/2+16, ry=250+Math.floor(i/2)*38;
+    ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.font='8px Rajdhani,sans-serif';
+    ctx.fillText(k, col, ry);
+    ctx.fillStyle=v==='✔ VALID'?'#2ecc71':'#fff';
+    ctx.font='bold 13px Rajdhani,sans-serif';
+    ctx.fillText(v, col, ry+16);
+  });
+
+  // serial / fp
+  ctx.textAlign='center';
+  ctx.fillStyle='rgba(255,255,255,0.22)'; ctx.font='7.5px "Share Tech Mono",monospace';
+  ctx.fillText('SERIAL: '+serial, W/2, 368);
+  ctx.fillText('SHA-256: '+fp.slice(0,46)+'…', W/2, 380);
+
+  // ── BOTTOM DIVIDER ──
+  ctx.strokeStyle='rgba(240,165,0,0.4)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(30,392); ctx.lineTo(W-30,392); ctx.stroke();
+
+  // ── SEAL (bottom-left) ──
+  ctx.save(); ctx.translate(70, 470);
+  ctx.beginPath();
+  for(let s=0;s<12;s++){
+    const a=s*Math.PI/6, r=s%2===0?28:21;
+    s===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+  }
+  ctx.closePath();
+  ctx.fillStyle='rgba(240,165,0,0.18)'; ctx.fill();
+  ctx.strokeStyle='#f0a500'; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.fillStyle='#f5c842'; ctx.font='bold 7px Orbitron,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('VERIFIED', 0, -4); ctx.fillText('PNB 2026', 0, 7);
+  ctx.restore();
+
+  // signature line
+  ctx.strokeStyle='rgba(255,255,255,0.18)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(108,500); ctx.lineTo(240,500); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,0.28)'; ctx.font='8px Rajdhani,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('Authorised Signatory', 174, 512);
+
+  // ── QR CODE (bottom-right) ──
+  const QS = 120;                    // QR image size
+  const QX = W - QS - 30;           // x = 410
+  const QY = 400;                    // y = 400, well below divider
+
+  // dark panel
+  ctx.fillStyle='#07071a';
+  ctx.beginPath(); roundRect(ctx, QX-10, QY-10, QS+20, QS+36, 8); ctx.fill();
+  // gold border
+  ctx.strokeStyle='#f0a500'; ctx.lineWidth=2;
+  ctx.beginPath(); roundRect(ctx, QX-10, QY-10, QS+20, QS+36, 8); ctx.stroke();
+
+  if (qrImg) {
+    // Draw the actual QR
+    ctx.drawImage(qrImg, QX, QY, QS, QS);
+  } else {
+    // Fallback placeholder
+    ctx.fillStyle='rgba(240,165,0,0.15)';
+    ctx.fillRect(QX, QY, QS, QS);
+    ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='9px Orbitron,sans-serif'; ctx.textAlign='center';
+    ctx.fillText('QR', QX+QS/2, QY+QS/2+4);
+  }
+
+  // "SCAN TO VERIFY" label inside panel
+  ctx.fillStyle='#f0a500'; ctx.font='bold 8px Orbitron,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('SCAN TO VERIFY', QX+QS/2, QY+QS+14);
+  // cert ID micro-text
+  ctx.fillStyle='rgba(255,255,255,0.38)'; ctx.font='7px "Share Tech Mono",monospace';
+  ctx.fillText(certId, QX+QS/2, QY+QS+24);
+
+  // ── FOOTER ──
+  ctx.textAlign='center';
+  ctx.fillStyle='rgba(255,255,255,0.25)'; ctx.font='8px Rajdhani,sans-serif';
+  ctx.fillText('Digitally Signed · PNB CyberShield Platform · 2026', W/2, 622);
+}
+
+// Helper: rounded rectangle path
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y); ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r); ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h); ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r); ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+function downloadCert() {
+  // Download visual certificate as PNG
+  if (window._certCanvas) {
+    const a = document.createElement('a');
+    a.href = window._certCanvas.toDataURL('image/png');
+    a.download = (window._currentDomain || 'certificate') + '-cert.png';
+    a.click();
+  }
+  // Also download PEM
+  const blob = new Blob([window._currentPem], {type:'text/plain'});
+  const a2 = document.createElement('a');
+  a2.href = URL.createObjectURL(blob);
+  a2.download = (window._currentDomain || 'certificate') + '.pem';
+  setTimeout(() => { a2.click(); URL.revokeObjectURL(a2.href); }, 300);
+  showToast('⬇ Certificate downloaded (PNG + PEM)', '#2980b9');
+}
+
+function downloadQR() {
+  if (!window._currentQrCanvas) return;
+  // Create a styled QR image with label
+  const out = document.createElement('canvas');
+  out.width = 160; out.height = 185;
+  const c = out.getContext('2d');
+  // Background
+  c.fillStyle = '#07071a'; c.fillRect(0,0,160,185);
+  // Gold border
+  c.strokeStyle = '#f0a500'; c.lineWidth = 2;
+  c.strokeRect(2,2,156,181);
+  // QR
+  c.drawImage(window._currentQrCanvas, 14, 12, 132, 132);
+  // Label
+  c.fillStyle = '#f0a500';
+  c.font = 'bold 9px monospace';
+  c.textAlign = 'center';
+  c.fillText('SCAN TO VERIFY', 80, 160);
+  c.fillStyle = 'rgba(255,255,255,0.5)';
+  c.font = '8px monospace';
+  c.fillText(document.getElementById('cert-qr-certid-label').textContent, 80, 174);
+  const a = document.createElement('a');
+  a.href = out.toDataURL('image/png');
+  a.download = (window._currentDomain || 'cert') + '-qr.png';
+  a.click();
+  showToast('⬇ QR Code saved', '#27ae60');
+}
+
+function shareCert() {
+  const text = `PNB Cybersecurity Certificate\nDomain: ${window._currentDomain}\n\n${window._currentPem}`;
+  if (navigator.share) {
+    navigator.share({ title: 'PNB Certificate', text }).catch(() => copyToClipboard(text));
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('📋 Certificate copied to clipboard', '#8e44ad');
+  }).catch(() => showToast('⚠ Copy not supported in this browser', '#e67e22'));
+}
+
+function showToast(msg, bg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = `position:fixed;bottom:30px;right:30px;background:${bg};color:#fff;padding:12px 22px;border-radius:8px;font-family:Orbitron;font-size:13px;font-weight:700;z-index:99999;animation:fadeInUp .3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.4)`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+document.getElementById('cert-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeCertModal();
+});
+</script>
+
+<!-- SCAN ALL MODAL -->
+<div id="scan-all-modal" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);">
+<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;">
+<div style="background:linear-gradient(135deg,#0a0a1a,#0d1b2a);border:1px solid rgba(240,165,0,0.4);border-radius:16px;width:700px;max-width:96vw;max-height:92vh;overflow-y:auto;padding:28px;animation:scaleIn .3s ease;box-shadow:0 20px 60px rgba(0,0,0,0.9);">
+
+  <!-- Header -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+    <div style="font-family:'Orbitron';font-size:16px;color:var(--gold-light);">🔍 Scanning All Assets</div>
+    <span id="scan-all-close-btn" onclick="closeScanAllModal()" style="cursor:pointer;font-size:20px;color:rgba(255,255,255,0.4);pointer-events:none;">✕</span>
+  </div>
+
+  <!-- Overall progress -->
+  <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px;margin-bottom:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span id="scan-all-status" style="font-size:13px;color:var(--gold-light);font-weight:700;">Initialising...</span>
+      <span id="scan-all-pct" style="font-family:'Orbitron';font-size:14px;color:#fff;">0%</span>
+    </div>
+    <div style="background:rgba(255,255,255,0.1);border-radius:6px;height:10px;overflow:hidden;">
+      <div id="scan-all-bar" style="height:10px;background:linear-gradient(90deg,#f0a500,#27ae60);border-radius:6px;width:0%;transition:width .5s ease;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:rgba(255,255,255,0.4);">
+      <span id="scan-all-count">0 / 0 assets scanned</span>
+      <span id="scan-all-eta">Estimating...</span>
+    </div>
+  </div>
+
+  <!-- Per-asset scan log -->
+  <div style="background:rgba(0,0,0,0.4);border-radius:10px;padding:14px;max-height:260px;overflow-y:auto;" id="scan-all-log-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:12px;" id="scan-all-log-table">
+      <thead><tr>
+        <th style="text-align:left;color:var(--gold-light);padding:4px 8px;font-size:11px;">Asset</th>
+        <th style="text-align:left;color:var(--gold-light);padding:4px 8px;font-size:11px;">TLS</th>
+        <th style="text-align:left;color:var(--gold-light);padding:4px 8px;font-size:11px;">Key</th>
+        <th style="text-align:left;color:var(--gold-light);padding:4px 8px;font-size:11px;">Cert</th>
+        <th style="text-align:left;color:var(--gold-light);padding:4px 8px;font-size:11px;">Risk</th>
+        <th style="text-align:left;color:var(--gold-light);padding:4px 8px;font-size:11px;">Status</th>
+      </tr></thead>
+      <tbody id="scan-all-log-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Summary (shown after scan) -->
+  <div id="scan-all-summary" style="display:none;margin-top:16px;">
+    <div style="font-family:'Orbitron';font-size:13px;color:var(--gold-light);margin-bottom:10px;">📊 Scan Summary</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+      <div style="background:rgba(39,174,96,0.2);border:1px solid rgba(39,174,96,0.4);border-radius:8px;padding:10px;text-align:center;">
+        <div id="sum-safe" style="font-family:'Orbitron';font-size:22px;color:#27ae60;font-weight:700;">0</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">Safe</div>
+      </div>
+      <div style="background:rgba(243,156,18,0.2);border:1px solid rgba(243,156,18,0.4);border-radius:8px;padding:10px;text-align:center;">
+        <div id="sum-medium" style="font-family:'Orbitron';font-size:22px;color:#f39c12;font-weight:700;">0</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">Medium</div>
+      </div>
+      <div style="background:rgba(192,57,43,0.2);border:1px solid rgba(192,57,43,0.4);border-radius:8px;padding:10px;text-align:center;">
+        <div id="sum-high" style="font-family:'Orbitron';font-size:22px;color:#e74c3c;font-weight:700;">0</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">High</div>
+      </div>
+      <div style="background:rgba(123,0,0,0.3);border:1px solid rgba(255,80,80,0.4);border-radius:8px;padding:10px;text-align:center;">
+        <div id="sum-critical" style="font-family:'Orbitron';font-size:22px;color:#ff4444;font-weight:700;">0</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">Critical</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeScanAllModal()" style="padding:10px 24px;background:transparent;border:1px solid rgba(255,200,100,0.4);border-radius:8px;color:#fff;font-family:'Rajdhani';font-size:13px;cursor:pointer;">Close</button>
+      <button onclick="applyScanResults()" style="padding:10px 28px;background:var(--btn-gold);border:none;border-radius:8px;font-family:'Orbitron';font-size:13px;font-weight:700;color:#111;cursor:pointer;transition:transform .15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">✔ Apply Results</button>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- CERTIFICATE MODAL -->
+<div id="cert-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);">
+<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;">
+<div style="background:linear-gradient(135deg,#0d1b2a,#1a1a2e);border:1px solid rgba(240,165,0,0.4);border-radius:16px;width:620px;max-width:95vw;max-height:90vh;overflow-y:auto;padding:28px;animation:scaleIn .3s ease;box-shadow:0 20px 60px rgba(0,0,0,0.9);">
+
+  <!-- STEP 1: Form -->
+  <div id="cert-step1">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-family:'Orbitron';font-size:16px;color:var(--gold-light);">🏅 Generate Certificate</div>
+      <span onclick="closeCertModal()" style="cursor:pointer;font-size:20px;color:rgba(255,255,255,0.5);transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">✕</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;">Domain / Common Name *</label>
+        <input id="cert-domain" type="text" placeholder="e.g. portal.pnb.bank.in" style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,200,100,0.4)'">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;">Organisation</label>
+        <input id="cert-org" type="text" placeholder="Punjab National Bank" style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,200,100,0.4)'">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;">Certificate Type</label>
+        <select id="cert-type" style="padding:10px 14px;border-radius:8px;background:#0d1b2a;border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;">
+          <option>TLS/SSL</option>
+          <option>Code Signing</option>
+          <option>Client Auth</option>
+          <option>PQC Hybrid</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;">Key Size</label>
+        <select id="cert-bits" style="padding:10px 14px;border-radius:8px;background:#0d1b2a;border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;">
+          <option>2048</option>
+          <option>3072</option>
+          <option selected>4096</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;">Validity Period</label>
+        <select style="padding:10px 14px;border-radius:8px;background:#0d1b2a;border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;">
+          <option>1 Year</option>
+          <option>2 Years</option>
+          <option>90 Days</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;">Signature Algorithm</label>
+        <select style="padding:10px 14px;border-radius:8px;background:#0d1b2a;border:1px solid rgba(255,200,100,0.4);color:#fff;font-family:'Rajdhani';font-size:14px;outline:none;">
+          <option>SHA-256</option>
+          <option>SHA-384</option>
+          <option>SHA-512</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:20px;display:flex;justify-content:flex-end;gap:10px;">
+      <button onclick="closeCertModal()" style="padding:10px 20px;background:transparent;border:1px solid rgba(255,200,100,0.4);border-radius:8px;color:#fff;font-family:'Rajdhani';font-size:13px;cursor:pointer;">Cancel</button>
+      <button onclick="generateCertificate()" style="padding:10px 26px;background:linear-gradient(135deg,#1a6b3c,#27ae60);border:none;border-radius:8px;font-family:'Orbitron';font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:transform .15s,box-shadow .15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(39,174,96,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">⚙ Generate</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Progress -->
+  <div id="cert-step2" style="display:none;text-align:center;padding:30px 0;">
+    <div style="font-size:44px;animation:spin 1s linear infinite;display:inline-block;">🔐</div>
+    <div id="cert-prog-text" style="font-family:'Orbitron';font-size:14px;color:var(--gold-light);margin:16px 0 10px;">Generating key pair...</div>
+    <div style="background:rgba(255,255,255,0.1);border-radius:6px;height:8px;width:320px;margin:0 auto;overflow:hidden;">
+      <div id="cert-prog-bar" style="height:8px;background:linear-gradient(90deg,#27ae60,#f0a500);border-radius:6px;width:0%;transition:width .4s ease;"></div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Result -->
+  <div id="cert-step3" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-family:'Orbitron';font-size:15px;color:#27ae60;">✔ Certificate Ready</div>
+      <span onclick="closeCertModal()" style="cursor:pointer;font-size:20px;color:rgba(255,255,255,0.5);" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">✕</span>
+    </div>
+
+    <!-- Certificate canvas + QR side by side -->
+    <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;">
+
+      <!-- Visual Certificate Canvas -->
+      <div style="flex:1;min-width:260px;">
+        <canvas id="cert-canvas" width="560" height="640" style="border-radius:10px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.7);border:1px solid rgba(240,165,0,0.3);"></canvas>
+      </div>
+
+      <!-- QR Code Panel — auto-generated -->
+      <div id="cert-qr-panel" style="width:160px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <!-- Scanning animation shown while QR generates -->
+        <div id="cert-qr-loading" style="width:140px;height:140px;border:2px dashed rgba(240,165,0,0.4);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+          <div style="font-size:24px;animation:spin 1.2s linear infinite;display:inline-block;">⚙</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'Orbitron';">Generating...</div>
+        </div>
+
+        <!-- Actual QR canvas (shown after generation) -->
+        <div id="cert-qr-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px;width:100%;">
+          <div style="background:#07071a;border:2px solid #f0a500;border-radius:10px;padding:8px;">
+            <canvas id="cert-qr-canvas" style="display:block;border-radius:4px;"></canvas>
+          </div>
+          <div style="font-family:'Orbitron';font-size:8px;color:#f0a500;text-align:center;letter-spacing:1px;">SCAN TO VERIFY</div>
+          <div id="cert-qr-id" style="font-family:'Share Tech Mono';font-size:9px;color:rgba(255,255,255,0.45);text-align:center;word-break:break-all;"></div>
+        </div>
+
+        <!-- Info labels -->
+        <div style="background:rgba(240,165,0,0.07);border:1px solid rgba(240,165,0,0.2);border-radius:8px;padding:8px 10px;width:100%;box-sizing:border-box;">
+          <div style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:4px;">CERT ID</div>
+          <div id="cert-qr-certid-label" style="font-family:'Orbitron';font-size:10px;color:#f5c842;font-weight:700;word-break:break-all;"></div>
+        </div>
+        <div style="background:rgba(39,174,96,0.1);border:1px solid rgba(39,174,96,0.3);border-radius:8px;padding:8px 10px;width:100%;box-sizing:border-box;text-align:center;">
+          <div style="font-size:9px;color:#2ecc71;font-weight:700;">✔ VALID</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;">Digitally Signed</div>
+        </div>
+
+        <!-- Download QR button -->
+        <button onclick="downloadQR()" style="width:100%;padding:8px;background:rgba(240,165,0,0.15);border:1px solid rgba(240,165,0,0.4);border-radius:8px;color:#f5c842;font-family:'Orbitron';font-size:9px;font-weight:700;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='rgba(240,165,0,0.25)'" onmouseout="this.style.background='rgba(240,165,0,0.15)'">⬇ Save QR</button>
+      </div>
+    </div>
+
+    <!-- Hidden text fields for PEM -->
+    <div style="display:none;">
+      <span id="cert-result-domain"></span><span id="cert-result-org"></span>
+      <span id="cert-result-type"></span><span id="cert-result-serial"></span>
+      <span id="cert-result-fp"></span><span id="cert-result-issued"></span><span id="cert-result-exp"></span>
+    </div>
+
+    <!-- PEM Preview -->
+    <div style="background:rgba(0,0,0,0.5);border-radius:8px;padding:12px;margin-bottom:16px;max-height:80px;overflow-y:auto;">
+      <pre id="cert-pem-block" style="font-family:'Share Tech Mono';font-size:10px;color:#27ae60;white-space:pre-wrap;word-break:break-all;margin:0;"></pre>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="generateCertificate()" style="flex:1;padding:11px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,200,100,0.3);border-radius:8px;color:#fff;font-family:'Orbitron';font-size:12px;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">🔄 Regenerate</button>
+      <button onclick="downloadCert()" style="flex:1;padding:11px;background:linear-gradient(135deg,#1a4a8b,#2980b9);border:none;border-radius:8px;color:#fff;font-family:'Orbitron';font-size:12px;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(41,128,185,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">⬇ Download PNG + PEM</button>
+      <button onclick="shareCert()" style="flex:1;padding:11px;background:linear-gradient(135deg,#6c3483,#8e44ad);border:none;border-radius:8px;color:#fff;font-family:'Orbitron';font-size:12px;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(142,68,173,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">📤 Share / Copy PEM</button>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+/* ── DELETE ASSET ROW ── */
+function deleteAssetRow(btn) {
+  const row = btn.closest('tr');
+  const name = row.cells[1] ? row.cells[1].textContent : 'Asset';
+  if (!confirm(`Remove "${name}" from inventory?`)) return;
+  row.style.transition = 'opacity .3s, transform .3s';
+  row.style.opacity = '0';
+  row.style.transform = 'translateX(30px)';
+  setTimeout(() => {
+    row.remove();
+    // update KPI
+    const kpi = document.querySelector('.kpi-val[data-count]');
+    if (kpi) { const n = Math.max(0, parseInt(kpi.textContent)-1); kpi.textContent = n; kpi.dataset.count = n; }
+    // toast
+    const toast = document.createElement('div');
+    toast.textContent = `🗑 "${name}" removed`;
+    toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:#c0392b;color:#fff;padding:12px 22px;border-radius:8px;font-family:Orbitron;font-size:13px;font-weight:700;z-index:99999;animation:fadeInUp .3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.4)';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+  }, 300);
+}
+</script>
+
+<script>
+/* ── GLOBAL SEARCH ── */
+const searchIndex = [
+  {icon:'🌐',name:'portal.company.com',meta:'Web App · IT · High Risk',page:'inventory',badge:'High',bc:'#c0392b'},
+  {icon:'🔌',name:'api.company.com',meta:'API · DevOps · Medium Risk',page:'inventory',badge:'Medium',bc:'#e67e22'},
+  {icon:'🔒',name:'vpn.company.com',meta:'Gateway · Infra · Critical',page:'inventory',badge:'Critical',bc:'#7b0000'},
+  {icon:'📧',name:'mail.company.com',meta:'Server · IT · Low Risk',page:'inventory',badge:'Low',bc:'#27ae60'},
+  {icon:'🌐',name:'app.company.com',meta:'Web App · IT · Medium Risk',page:'inventory',badge:'Medium',bc:'#e67e22'},
+  {icon:'🏛',name:'www.cos.pnb.bank.in',meta:'Domain · PNB',page:'inventory',badge:'Low',bc:'#27ae60'},
+  {icon:'🏛',name:'netbanking.pnb.bank.in',meta:'Domain · PNB · Critical',page:'inventory',badge:'Critical',bc:'#7b0000'},
+  {icon:'🏛',name:'mobile.pnb.bank.in',meta:'Domain · PNB',page:'inventory',badge:'Medium',bc:'#e67e22'},
+  {icon:'🏛',name:'vpn.pnb.bank.in',meta:'Domain · PNB · High',page:'inventory',badge:'High',bc:'#c0392b'},
+  {icon:'📡',name:'40.104.62.216',meta:'IP · Port 80 · AS9583',page:'inventory',badge:'Low',bc:'#27ae60'},
+  {icon:'📡',name:'103.25.151.22',meta:'IP · Port 53,80 · Nashik',page:'inventory',badge:'High',bc:'#c0392b'},
+  {icon:'📡',name:'21.151.42.188',meta:'IP · Port 22 · Critical',page:'inventory',badge:'Critical',bc:'#7b0000'},
+  {icon:'💾',name:'Apache 2.4.51',meta:'WebServer · Port 443',page:'inventory',badge:'Medium',bc:'#e67e22'},
+  {icon:'💾',name:'OpenSSL 1.0.2',meta:'Crypto Library · Critical',page:'inventory',badge:'Critical',bc:'#7b0000'},
+  {icon:'💾',name:'nginx 1.24.0',meta:'WebServer · Port 443',page:'inventory',badge:'Low',bc:'#27ae60'},
+  {icon:'🧬',name:'CBOM Analysis',meta:'Cryptographic Bill of Materials',page:'cbom',badge:'',bc:''},
+  {icon:'🚶',name:'PQC Posture',meta:'Post-Quantum Cryptography Dashboard',page:'pqc',badge:'',bc:''},
+  {icon:'⭐',name:'Cyber Rating',meta:'Enterprise Security Score: 755/1000',page:'rating',badge:'',bc:''},
+  {icon:'📊',name:'Executive Report',meta:'Reporting · Executive Summary',page:'reporting',badge:'',bc:''},
+  {icon:'🏛',name:'Asset Discovery',meta:'Network Asset Graph & Discovery',page:'discovery',badge:'',bc:''},
+];
+
+function globalSearch(val) {
+  const box = document.getElementById('search-results');
+  if (!val.trim()) { box.classList.remove('open'); return; }
+  const q = val.toLowerCase();
+  const hits = searchIndex.filter(i => i.name.toLowerCase().includes(q) || i.meta.toLowerCase().includes(q)).slice(0,8);
+  if (!hits.length) {
+    box.innerHTML = `<div style="padding:14px;text-align:center;color:rgba(255,255,255,0.4);font-size:13px;">No results for "${val}"</div>`;
+  } else {
+    box.innerHTML = hits.map(h => `
+      <div class="search-result-item" onclick="searchGoTo('${h.page}','${h.name}')">
+        <span class="sri-icon">${h.icon}</span>
+        <div class="sri-info">
+          <div class="sri-name">${highlight(h.name, q)}</div>
+          <div class="sri-meta">${h.meta}</div>
+        </div>
+        ${h.badge ? `<span class="sri-badge" style="background:${h.bc};color:#fff;">${h.badge}</span>` : ''}
+      </div>`).join('');
+  }
+  box.classList.add('open');
+}
+
+function highlight(text, q) {
+  const idx = text.toLowerCase().indexOf(q);
+  if (idx < 0) return text;
+  return text.slice(0,idx) + `<mark style="background:rgba(240,165,0,0.35);color:#fff;border-radius:2px;">${text.slice(idx,idx+q.length)}</mark>` + text.slice(idx+q.length);
+}
+
+function searchGoTo(page, name) {
+  closeSearch();
+  document.getElementById('global-search').value = name;
+  showPage(page, document.querySelector(`.nav-item[onclick*="${page}"]`));
+  // highlight matching rows after short delay
+  setTimeout(() => {
+    document.querySelectorAll('.data-table tbody tr').forEach(row => {
+      if (row.textContent.toLowerCase().includes(name.toLowerCase())) {
+        row.style.background = 'rgba(240,165,0,0.18)';
+        row.scrollIntoView({behavior:'smooth', block:'center'});
+        setTimeout(() => row.style.background = '', 2500);
+      }
+    });
+  }, 300);
+}
+
+function closeSearch() {
+  document.getElementById('search-results').classList.remove('open');
+}
+
+/* ── LOGIN ── */
+/* ── GOOGLE SIGN-IN ── */
+// Show fallback button if GSI hasn't rendered the button after 2.5s
+setTimeout(function() {
+  const gsiBtn = document.querySelector('#g_id_signin iframe');
+  const fallback = document.getElementById('google-fallback-btn');
+  if (!gsiBtn && fallback) {
+    fallback.style.display = 'flex';
+  }
+}, 2500);
+
+function triggerGoogleLogin() {
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
+    // Use OAuth2 popup flow — most reliable
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: '517537886660-u3u3upihv2bllqr1drvuji6ko1eucl8s.apps.googleusercontent.com',
+      scope: 'email profile openid',
+      callback: function(tokenResponse) {
+        if (tokenResponse && tokenResponse.access_token) {
+          // Fetch user info with the token
+          fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
+          })
+          .then(r => r.json())
+          .then(u => enterDashboard(u.name || u.email, u.email, u.picture || ''))
+          .catch(() => {
+            document.getElementById('login-error').textContent = '⚠ Could not fetch Google profile.';
+            document.getElementById('login-error').style.display = 'block';
+          });
+        }
+      }
+    });
+    client.requestAccessToken({ prompt: 'select_account' });
+  } else if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+    google.accounts.id.prompt();
+  } else {
+    document.getElementById('login-error').textContent = '⚠ Google Sign-In is loading, please try again in a moment.';
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+function handleGoogleLogin(response) {
+  try {
+    const payload = JSON.parse(atob(response.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    enterDashboard(payload.name || payload.email, payload.email || '', payload.picture || '');
+  } catch(e) {
+    document.getElementById('login-error').textContent = '⚠ Google Sign-In failed. Please try again.';
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+function enterDashboard(displayName, email, avatarUrl) {
+  document.getElementById('page-login').classList.remove('active');
+  document.getElementById('header').style.display = 'flex';
+  document.getElementById('sidebar').style.display = 'flex';
+  document.getElementById('footer').style.display = 'flex';
+
+  // Update header user display
+  document.getElementById('user-display-name').textContent = displayName;
+  document.getElementById('dropdown-name').textContent = displayName;
+  document.getElementById('dropdown-email').textContent = email;
+
+  if (avatarUrl) {
+    const imgTag = `<img src="${avatarUrl}" style="width:22px;height:22px;border-radius:50%;border:1px solid var(--gold);">`;
+    document.getElementById('user-avatar-wrap').innerHTML = imgTag;
+    document.getElementById('dropdown-avatar').innerHTML = `<img src="${avatarUrl}" style="width:36px;height:36px;border-radius:50%;">`;
+  }
+
+  showPage('home', document.querySelector('.nav-item'));
+  animateCounters();
+  initNetworkGraph();
+}
+
+function toggleUserMenu() {
+  const dd = document.getElementById('user-dropdown');
+  const chevron = document.getElementById('user-chevron');
+  const open = dd.style.display === 'block';
+  dd.style.display = open ? 'none' : 'block';
+  chevron.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('user-menu-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('user-dropdown').style.display = 'none';
+    document.getElementById('user-chevron').style.transform = 'rotate(0deg)';
+  }
+});
+
+function doSignOut() {
+  // Sign out from Google if used
+  if (typeof google !== 'undefined' && google.accounts) {
+    google.accounts.id.disableAutoSelect();
+  }
+  // Reset UI
+  document.getElementById('user-dropdown').style.display = 'none';
+  document.getElementById('header').style.display = 'none';
+  document.getElementById('sidebar').style.display = 'none';
+  document.getElementById('footer').style.display = 'none';
+  document.getElementById('user-display-name').textContent = 'hackathon_user';
+  document.getElementById('user-avatar-wrap').innerHTML = '👤';
+  document.getElementById('dropdown-avatar').innerHTML = '👤';
+  document.getElementById('dropdown-name').textContent = '';
+  document.getElementById('dropdown-email').textContent = '';
+  // Reset login form
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-user').style.borderColor = '';
+  document.getElementById('login-pass').style.borderColor = '';
+  document.getElementById('login-error').style.display = 'none';
+  // Back to login
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-login').classList.add('active');
+  showToast('👋 Signed out successfully', '#27ae60');
+}
+
+/* ── EMAIL/PASSWORD LOGIN ── */
+function doLogin() {
+  const userVal = document.getElementById('login-user').value.trim();
+  const passVal = document.getElementById('login-pass').value;
+  const btn     = document.querySelector('.btn-login');
+  const errBox  = document.getElementById('login-error');
+  const userInp = document.getElementById('login-user');
+  const passInp = document.getElementById('login-pass');
+
+  const VALID_USERS = [
+    { email: 'hackathon_user@pnb.bank.in', password: 'password' },
+    { email: 'admin@pnb.bank.in',          password: 'admin123' },
+    { email: 'admin',                       password: 'admin' },
+  ];
+
+  if (!userVal || !passVal) {
+    errBox.textContent = '⚠ Please enter your email and password.';
+    errBox.style.display = 'block';
+    if (!userVal) userInp.style.borderColor = '#e74c3c';
+    if (!passVal) passInp.style.borderColor = '#e74c3c';
+    return;
+  }
+
+  const match = VALID_USERS.find(u =>
+    u.email.toLowerCase() === userVal.toLowerCase() && u.password === passVal
+  );
+
+  if (!match) {
+    errBox.textContent = '❌ Invalid email or password. Please try again.';
+    errBox.style.display = 'block';
+    userInp.style.borderColor = '#e74c3c';
+    passInp.style.borderColor = '#e74c3c';
+    const wrap = document.querySelector('.login-left');
+    let s = 0;
+    const shake = setInterval(() => {
+      wrap.style.transform = `translateX(${s % 2 === 0 ? -8 : 8}px)`;
+      s++;
+      if (s > 6) { clearInterval(shake); wrap.style.transform = 'translateX(0)'; }
+    }, 60);
+    passInp.value = '';
+    passInp.focus();
+    return;
+  }
+
+  errBox.style.display = 'none';
+  userInp.style.borderColor = '#27ae60';
+  passInp.style.borderColor = '#27ae60';
+  btn.textContent = '✔ Signing in...';
+  btn.style.opacity = '0.8';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    const displayName = match.email.split('@')[0].replace(/_/g,' ');
+    enterDashboard(displayName, match.email, '');
+    btn.textContent = 'Sign in';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  }, 700);
+}
+
+/* ── CERT VERIFY (QR scan lands here — opens full page) ── */
+(function checkVerifyParam() {
+  const p = new URLSearchParams(location.search);
+  if (!p.get('verify')) return;
+  // Replace entire page with the certificate verification view
+  function renderVerifyPage() {
+    const certId  = p.get('verify')  || '—';
+    const domain  = p.get('domain')  || '—';
+    const org     = p.get('org')     || '—';
+    const type    = p.get('type')    || '—';
+    const bits    = p.get('bits')    || '—';
+    const issued  = p.get('issued')  || '—';
+    const expires = p.get('expires') || '—';
+    const serial  = p.get('serial')  || '—';
+
+    document.title = 'Certificate Verification — PNB CyberShield';
+    document.body.innerHTML = `
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Rajdhani',sans-serif;background:linear-gradient(135deg,#07071a 0%,#0d1b2a 50%,#12172e 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+      @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,165,0,0.4)}50%{box-shadow:0 0 0 12px rgba(240,165,0,0)}}
+      @keyframes glow{0%,100%{text-shadow:0 0 8px rgba(240,165,0,0.3)}50%{text-shadow:0 0 24px rgba(240,165,0,0.8)}}
+      .card{background:linear-gradient(160deg,#0a0a1e,#0d1b2a,#111828);border:2px solid #f0a500;border-radius:20px;width:520px;max-width:100%;padding:36px 32px;animation:fadeInUp .5s ease;box-shadow:0 24px 80px rgba(0,0,0,0.8);}
+      .shield{width:64px;height:64px;margin:0 auto 14px;background:rgba(240,165,0,0.1);border:2px solid #f0a500;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;animation:pulse 2.5s infinite;}
+      .brand{font-family:'Orbitron',sans-serif;font-size:13px;color:#f5c842;text-align:center;letter-spacing:2px;margin-bottom:4px;}
+      .sub{font-size:11px;color:rgba(255,255,255,0.35);text-align:center;letter-spacing:1px;margin-bottom:20px;}
+      .valid-banner{background:rgba(39,174,96,0.12);border:1.5px solid rgba(39,174,96,0.5);border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+      .valid-icon{font-size:26px;}
+      .valid-title{font-family:'Orbitron',sans-serif;font-size:14px;color:#2ecc71;font-weight:700;}
+      .valid-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;}
+      .cert-id-box{background:rgba(240,165,0,0.07);border:1px solid rgba(240,165,0,0.35);border-radius:10px;padding:14px 18px;text-align:center;margin-bottom:20px;}
+      .cert-id-label{font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:2px;margin-bottom:6px;}
+      .cert-id-val{font-family:'Orbitron',sans-serif;font-size:20px;color:#f5c842;font-weight:900;letter-spacing:2px;animation:glow 3s ease-in-out infinite;}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+      .field{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:11px 14px;}
+      .field-label{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1.5px;margin-bottom:5px;text-transform:uppercase;}
+      .field-val{font-size:13px;color:#fff;font-weight:600;word-break:break-all;}
+      .field-val.green{color:#2ecc71;}
+      .field-val.gold{color:#f5c842;}
+      .divider{border:none;border-top:1px solid rgba(240,165,0,0.2);margin:18px 0;}
+      .serial-row{font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);text-align:center;margin-bottom:18px;word-break:break-all;}
+      .timestamp{font-size:10px;color:rgba(255,255,255,0.2);text-align:center;margin-bottom:18px;}
+      .footer-note{font-size:10px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.6;}
+      .btn-back{display:block;width:100%;padding:13px;background:linear-gradient(135deg,#f0a500,#f5c842);border:none;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:#07071a;cursor:pointer;margin-top:18px;transition:transform .15s,box-shadow .15s;}
+      .btn-back:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,165,0,0.5);}
+    </style>
+    <div class="card">
+      <div class="shield">🛡️</div>
+      <div class="brand">CYBERSHIELD · PNB</div>
+      <div class="sub">PUNJAB NATIONAL BANK · HACKATHON 2026</div>
+
+      <div class="valid-banner">
+        <div class="valid-icon">✅</div>
+        <div>
+          <div class="valid-title">CERTIFICATE VERIFIED</div>
+          <div class="valid-sub">This certificate was issued by PNB CyberShield Platform and is valid.</div>
+        </div>
+      </div>
+
+      <div class="cert-id-box">
+        <div class="cert-id-label">Certificate ID</div>
+        <div class="cert-id-val">${certId}</div>
+      </div>
+
+      <div class="grid">
+        <div class="field" style="grid-column:1/-1;">
+          <div class="field-label">Domain / Asset</div>
+          <div class="field-val gold">${domain}</div>
+        </div>
+        <div class="field" style="grid-column:1/-1;">
+          <div class="field-label">Organisation</div>
+          <div class="field-val">${org}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Certificate Type</div>
+          <div class="field-val">${type}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Key Size</div>
+          <div class="field-val">${bits}-bit</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Issued Date</div>
+          <div class="field-val green">${issued}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Expiry Date</div>
+          <div class="field-val" style="color:#f39c12;">${expires}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Status</div>
+          <div class="field-val green">✔ VALID</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Issuing Authority</div>
+          <div class="field-val">PNB CyberShield</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="serial-row">SERIAL: ${serial}</div>
+      <div class="timestamp">Verified on: ${new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'})}</div>
+      <div class="footer-note">
+        This certificate was digitally signed by PNB CyberShield Platform.<br>
+        Punjab National Bank · Hackathon 2026 · Powered by CyberShield
+      </div>
+      <button class="btn-back" onclick="window.close()">✕ Close</button>
+    </div>`;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderVerifyPage);
+  } else {
+    renderVerifyPage();
+  }
+})();
+
+function showVerifyModal(certId, p) {
+  // kept for backward compat — no-op since QR now opens new tab
+}
+function closeCertVerifyModal() {
+  document.getElementById('cert-verify-modal').style.display = 'none';
+  history.replaceState({}, '', location.pathname);
+}
+
+/* ── PAGE NAVIGATION ── */
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  page.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (name === 'home') animateCounters();
+}
+
+/* ── TABS ── */
+function switchTab(btn, groupId, targetId) {
+  btn.parentElement.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const page = btn.closest('.page');
+  page.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(targetId).classList.add('active');
+}
+
+/* ── REPORT SUB-PAGES ── */
+function showReportSub(name) {
+  ['report-main','report-exec','report-schedule','report-ondemand'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  const el = document.getElementById('report-' + name);
+  el.style.display = 'block';
+  el.style.animation = 'fadeInUp .4s ease';
+}
+function backToReports() {
+  ['report-exec','report-schedule','report-ondemand'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('report-main').style.display = 'block';
+}
+
+/* ── ANIMATED COUNTERS ── */
+function animateCounters() {
+  document.querySelectorAll('.kpi-val[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    let current = 0;
+    const step = Math.ceil(target / 30);
+    el.textContent = '0';
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current;
+      if (current >= target) clearInterval(timer);
+    }, 40);
+  });
+}
+
+/* ── ASSET DISCOVERY ── */
+let _discPeriod = '24h';
+let _discAnimId = null;
+
+function setPeriod(p, btn) {
+  _discPeriod = p;
+  document.querySelectorAll('.period-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cr = document.getElementById('custom-date-row');
+  cr.style.display = p === 'custom' ? 'flex' : 'none';
+  // if already have results, re-render graph with new period filter
+  if (window._discResults) renderDiscovery(window._discResults);
+}
+
+function runDiscovery() {
+  const raw = document.getElementById('disc-domain-input').value.trim();
+  if (!raw) { document.getElementById('disc-domain-input').style.borderColor='#e74c3c'; return; }
+  document.getElementById('disc-domain-input').style.borderColor='rgba(255,200,100,0.4)';
+
+  // Extract base domain from URL if needed
+  let domain = raw.replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/^www\./,'');
+
+  // Show scanning state
+  document.getElementById('disc-empty').style.display = 'none';
+  document.getElementById('disc-scanning').style.display = 'block';
+  document.getElementById('network-canvas').style.display = 'none';
+  document.getElementById('disc-stats-row').style.display = 'none';
+  document.getElementById('disc-results-card').style.display = 'none';
+
+  const steps = [
+    [15,  'Resolving DNS records...'],
+    [30,  'Enumerating subdomains...'],
+    [48,  'Scanning open ports...'],
+    [62,  'Checking TLS certificates...'],
+    [76,  'Mapping IP ranges...'],
+    [88,  'Analysing risk posture...'],
+    [100, 'Building asset graph...'],
+  ];
+  const bar = document.getElementById('disc-scan-bar');
+  const txt = document.getElementById('disc-scan-text');
+  let si = 0;
+  function step() {
+    if (si >= steps.length) {
+      setTimeout(() => {
+        const results = generateMockResults(domain);
+        window._discResults = results;
+        renderDiscovery(results);
+      }, 300);
+      return;
+    }
+    bar.style.width = steps[si][0] + '%';
+    txt.textContent = steps[si][1];
+    si++; setTimeout(step, 420);
+  }
+  step();
+}
+
+function generateMockResults(domain) {
+  const tld = domain.includes('.') ? domain : domain + '.com';
+  const prefixes = ['www','api','portal','mail','vpn','app','cdn','auth','admin','mobile','static','dev','staging'];
+  const types    = ['Web App','API','Server','Gateway','CDN','Mail','Auth'];
+  const risks    = ['Low','Low','Medium','Medium','High','Critical'];
+  const tls      = ['1.3','1.3','1.2','1.2','1.1'];
+  const ports    = ['80,443','443','22,443','80,443,8080','443,8443','25,443','22,80,443'];
+  const cas      = ['DigiCert','Let\'s Encrypt','GlobalSign','COMODO','Sectigo'];
+
+  const now = new Date();
+  const periodDays = { '24h':1, '7d':7, '30d':30, '90d':90, 'custom':60 };
+  const days = periodDays[_discPeriod] || 7;
+
+  // Seed based on domain so same domain gives consistent results
+  let seed = tld.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+  const rng = () => { seed = (seed * 1664525 + 1013904223) & 0xffffffff; return Math.abs(seed) / 0xffffffff; };
+
+  const count = 5 + Math.floor(rng() * 6); // 5–10 assets
+  const results = [];
+
+  // Always include root domain
+  results.push({
+    label: tld, sub: tld, ip: `${103+Math.floor(rng()*50)}.${Math.floor(rng()*255)}.${Math.floor(rng()*255)}.${Math.floor(rng()*255)}`,
+    type: 'Web App', ports: '80,443', tls: '1.3', risk: 'Low', ca: 'DigiCert',
+    firstSeen: daysAgo(Math.floor(rng()*days), now), isRoot: true
+  });
+
+  for (let i = 0; i < count; i++) {
+    const prefix = prefixes[Math.floor(rng() * prefixes.length)];
+    const sub = `${prefix}.${tld}`;
+    const risk = risks[Math.floor(rng() * risks.length)];
+    const firstSeen = daysAgo(Math.floor(rng() * days), now);
+    results.push({
+      label: prefix.toUpperCase(), sub,
+      ip: `${103+Math.floor(rng()*50)}.${Math.floor(rng()*255)}.${Math.floor(rng()*255)}.${Math.floor(rng()*255)}`,
+      type: types[Math.floor(rng()*types.length)],
+      ports: ports[Math.floor(rng()*ports.length)],
+      tls: tls[Math.floor(rng()*tls.length)],
+      risk, ca: cas[Math.floor(rng()*cas.length)],
+      firstSeen, isRoot: false
+    });
+  }
+  return results;
+}
+
+function daysAgo(n, from) {
+  const d = new Date(from); d.setDate(d.getDate() - n);
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+function renderDiscovery(results) {
+  document.getElementById('disc-scanning').style.display = 'none';
+
+  // Stats
+  const high = results.filter(r => r.risk === 'High' || r.risk === 'Critical').length;
+  const ips  = [...new Set(results.map(r=>r.ip))].length;
+  const ports= [...new Set(results.flatMap(r=>r.ports.split(',')))].length;
+  document.getElementById('ds-total').textContent      = results.length;
+  document.getElementById('ds-subdomains').textContent = results.length - 1;
+  document.getElementById('ds-ips').textContent        = ips;
+  document.getElementById('ds-open-ports').textContent = ports;
+  document.getElementById('ds-risk').textContent       = high;
+  document.getElementById('disc-stats-row').style.display = 'flex';
+
+  // Period label
+  const labels = {'24h':'Last 24 Hours','7d':'Last 7 Days','30d':'Last 30 Days','90d':'Last 90 Days','custom':'Custom Range'};
+  document.getElementById('disc-period-label').textContent = '⏱ ' + (labels[_discPeriod]||'');
+  document.getElementById('disc-graph-meta').textContent =
+    `Domain: ${results[0].sub}  ·  ${results.length} assets  ·  ${labels[_discPeriod]||''}`;
+
+  // Results table
+  const tbody = document.getElementById('disc-results-body');
+  const riskColor = {Low:'#27ae60',Medium:'#e67e22',High:'#c0392b',Critical:'#7b0000'};
+  tbody.innerHTML = results.map((r,i) => `
+    <tr>
+      <td style="color:rgba(255,255,255,0.4)">${i+1}</td>
+      <td><div style="font-weight:700;color:#fff">${r.sub}</div><div style="font-size:10px;color:rgba(255,255,255,0.4)">${r.ca}</div></td>
+      <td style="font-family:'Share Tech Mono';font-size:11px;color:var(--gold-light)">${r.ip}</td>
+      <td><span class="badge" style="background:rgba(255,255,255,0.1);color:#fff">${r.type}</span></td>
+      <td style="font-family:'Share Tech Mono';font-size:11px">${r.ports}</td>
+      <td><span style="color:${r.tls==='1.3'?'#27ae60':r.tls==='1.2'?'#f39c12':'#e74c3c'}">TLS ${r.tls}</span></td>
+      <td><span class="badge" style="background:${riskColor[r.risk]||'#555'};color:#fff">${r.risk}</span></td>
+      <td style="font-size:11px;color:rgba(255,255,255,0.5)">${r.firstSeen}</td>
+    </tr>`).join('');
+  document.getElementById('disc-results-card').style.display = 'block';
+
+  // Draw graph
+  drawDiscoveryGraph(results);
+}
+
+function drawDiscoveryGraph(results) {
+  const canvas = document.getElementById('network-canvas');
+  canvas.style.display = 'block';
+  canvas.width = 900; canvas.height = 480;
+
+  if (_discAnimId) cancelAnimationFrame(_discAnimId);
+
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Build nodes from results
+  const typeColor = {
+    'Web App':  {c:'#2980b9', b:'#5dade2', icon:'🌐'},
+    'API':      {c:'#8e44ad', b:'#bb8fce', icon:'🔌'},
+    'Server':   {c:'#27ae60', b:'#58d68d', icon:'🖥'},
+    'Gateway':  {c:'#e74c3c', b:'#f1948a', icon:'🔒'},
+    'CDN':      {c:'#16a085', b:'#48c9b0', icon:'☁'},
+    'Mail':     {c:'#d35400', b:'#f0b27a', icon:'📧'},
+    'Auth':     {c:'#c0392b', b:'#f5b7b1', icon:'🔑'},
+  };
+  const riskBorder = {Low:'#27ae60', Medium:'#f39c12', High:'#e74c3c', Critical:'#ff0000'};
+
+  // Position nodes in a circle around root
+  const cx = W/2, cy = H/2 - 20;
+  const nodes = results.map((r, i) => {
+    if (r.isRoot) return { x:cx, y:cy, r:30, ...r, ...(typeColor[r.type]||typeColor['Web App']), isRoot:true };
+    const angle = ((i-1) / (results.length-1)) * Math.PI * 2 - Math.PI/2;
+    const radius = 160 + (i % 2) * 30;
+    return {
+      x: cx + Math.cos(angle) * radius,
+      y: cy + Math.sin(angle) * radius,
+      r: 20, ...r, ...(typeColor[r.type]||typeColor['Web App'])
+    };
+  });
+
+  // All non-root nodes connect to root
+  const edges = results.slice(1).map((_,i) => [0, i+1]);
+  // Add a few cross-links for visual richness
+  if (nodes.length > 3) { edges.push([1,2]); }
+  if (nodes.length > 5) { edges.push([2,4]); }
+  if (nodes.length > 7) { edges.push([3,6]); }
+
+  const packetOffsets = edges.map((_,i) => i/edges.length);
+  let pulse = 0;
+
+  function hexToRgba(hex, a) {
+    const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  function drawNode(n, i) {
+    const pf = 1 + 0.05 * Math.sin(pulse * 0.04 + i * 0.9);
+    const r = n.r * pf;
+    const borderCol = n.isRoot ? '#f5c842' : (riskBorder[n.risk] || n.b);
+
+    // glow
+    const grad = ctx.createRadialGradient(n.x,n.y,r*0.4,n.x,n.y,r+16);
+    grad.addColorStop(0, hexToRgba(n.c, 0.4));
+    grad.addColorStop(1, hexToRgba(n.c, 0));
+    ctx.beginPath(); ctx.arc(n.x,n.y,r+16,0,Math.PI*2);
+    ctx.fillStyle = grad; ctx.fill();
+
+    // fill
+    const fg = ctx.createRadialGradient(n.x-r*.3,n.y-r*.3,r*.1,n.x,n.y,r);
+    fg.addColorStop(0, hexToRgba(n.b, 0.9));
+    fg.addColorStop(1, hexToRgba(n.c, 1));
+    ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
+    ctx.fillStyle = fg; ctx.fill();
+
+    // border (risk-coloured for non-root)
+    ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
+    ctx.strokeStyle = borderCol; ctx.lineWidth = n.isRoot ? 3 : 2; ctx.stroke();
+
+    // icon
+    ctx.font = `${r*0.85}px serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(n.icon, n.x, n.y);
+
+    // label
+    ctx.textBaseline = 'top';
+    ctx.font = `bold ${n.isRoot?13:10}px Rajdhani,sans-serif`;
+    ctx.fillStyle = '#fff'; ctx.shadowColor='rgba(0,0,0,0.9)'; ctx.shadowBlur=4;
+    ctx.fillText(n.label, n.x, n.y+r+4);
+    ctx.font = '8px "Share Tech Mono",monospace';
+    ctx.fillStyle = hexToRgba(n.b, 0.8);
+    ctx.fillText(n.ip, n.x, n.y+r+16);
+    ctx.shadowBlur = 0;
+  }
+
+  function frame() {
+    ctx.clearRect(0,0,W,H);
+    // bg
+    const bg = ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'rgba(0,0,25,0.97)'); bg.addColorStop(1,'rgba(10,0,40,0.97)');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    // grid
+    ctx.strokeStyle='rgba(255,255,255,0.025)'; ctx.lineWidth=1;
+    for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+    // edges
+    edges.forEach(([a,b],idx) => {
+      const na=nodes[a], nb=nodes[b];
+      const isRisky = nb.risk==='High'||nb.risk==='Critical';
+      ctx.beginPath(); ctx.moveTo(na.x,na.y); ctx.lineTo(nb.x,nb.y);
+      ctx.strokeStyle = isRisky ? 'rgba(231,76,60,0.5)' : 'rgba(255,200,100,0.3)';
+      ctx.lineWidth = isRisky ? 2 : 1.4;
+      ctx.setLineDash(isRisky ? [6,4] : []);
+      ctx.stroke(); ctx.setLineDash([]);
+      // packet
+      const t = ((pulse*0.008)+packetOffsets[idx])%1;
+      const px=na.x+(nb.x-na.x)*t, py=na.y+(nb.y-na.y)*t;
+      ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2);
+      ctx.fillStyle = isRisky ? 'rgba(231,76,60,0.9)' : 'rgba(245,200,66,0.9)';
+      ctx.fill();
+    });
+
+    nodes.forEach((n,i) => drawNode(n,i));
+
+    // legend
+    const legend = [
+      {c:'#27ae60',l:'Low Risk'},{c:'#f39c12',l:'Medium'},{c:'#e74c3c',l:'High'},{c:'#ff0000',l:'Critical'},
+      {c:'rgba(231,76,60,0.7)',l:'Risky Link',dash:true}
+    ];
+    ctx.textBaseline='middle';
+    legend.forEach((l,i) => {
+      const lx=16+i*120, ly=H-18;
+      if(l.dash){
+        ctx.setLineDash([5,3]); ctx.beginPath(); ctx.moveTo(lx-6,ly); ctx.lineTo(lx+6,ly);
+        ctx.strokeStyle=l.c; ctx.lineWidth=2; ctx.stroke(); ctx.setLineDash([]);
+      } else {
+        ctx.beginPath(); ctx.arc(lx,ly,6,0,Math.PI*2); ctx.fillStyle=l.c; ctx.fill();
+      }
+      ctx.font='10px Rajdhani,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.7)';
+      ctx.textAlign='left'; ctx.fillText(l.l, lx+10, ly);
+    });
+
+    pulse++;
+    _discAnimId = requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+/* ── NETWORK GRAPH (legacy init kept for compatibility) ── */
+function initNetworkGraph() {
+  // Only draw if no discovery has been run yet
+  if (!window._discResults) return;
+}
+</script>
+
+<!-- CERT VERIFY MODAL (shown when QR code is scanned) -->
+<div id="cert-verify-modal" style="display:none;position:fixed;inset:0;z-index:20000;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+<div style="background:linear-gradient(135deg,#07071a,#0d1b2a);border:2px solid #f0a500;border-radius:16px;width:460px;max-width:95vw;padding:32px;animation:scaleIn .3s ease;box-shadow:0 20px 60px rgba(0,0,0,0.9);position:relative;">
+
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:20px;">
+    <!-- Shield icon -->
+    <div style="width:56px;height:56px;margin:0 auto 12px;background:rgba(240,165,0,0.12);border:2px solid #f0a500;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;">🛡️</div>
+    <div style="font-family:'Orbitron',sans-serif;font-size:16px;color:#f5c842;font-weight:700;">Certificate Verified</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;">PNB CyberShield · Hackathon 2026</div>
+  </div>
+
+  <!-- Green verified banner -->
+  <div style="background:rgba(39,174,96,0.15);border:1px solid rgba(39,174,96,0.5);border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+    <span style="font-size:20px;">✅</span>
+    <div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:#2ecc71;font-weight:700;">VALID CERTIFICATE</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">This certificate has been issued by PNB CyberShield Platform</div>
+    </div>
+  </div>
+
+  <!-- Cert ID highlight -->
+  <div style="background:rgba(240,165,0,0.08);border:1px solid rgba(240,165,0,0.35);border-radius:8px;padding:12px 16px;margin-bottom:16px;text-align:center;">
+    <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:4px;">CERTIFICATE ID</div>
+    <div id="cv-certid" style="font-family:'Orbitron',sans-serif;font-size:18px;color:#f5c842;font-weight:700;letter-spacing:1px;">—</div>
+  </div>
+
+  <!-- Details grid -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+    <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 14px;">
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:4px;">DOMAIN / ASSET</div>
+      <div id="cv-domain" style="font-size:13px;color:#fff;font-weight:600;word-break:break-all;">—</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 14px;">
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:4px;">ORGANISATION</div>
+      <div id="cv-org" style="font-size:13px;color:#fff;font-weight:600;">—</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 14px;">
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:4px;">ISSUED</div>
+      <div id="cv-issued" style="font-size:13px;color:#fff;font-weight:600;">—</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 14px;">
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:4px;">EXPIRES</div>
+      <div id="cv-expires" style="font-size:13px;color:#fff;font-weight:600;">—</div>
+    </div>
+  </div>
+
+  <!-- Footer note -->
+  <div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.25);margin-bottom:16px;">
+    Verified by PNB CyberShield Platform · Punjab National Bank · Hackathon 2026
+  </div>
+
+  <!-- Close button -->
+  <button onclick="closeCertVerifyModal()" style="width:100%;padding:12px;background:linear-gradient(135deg,#f0a500,#f5c842);border:none;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:#07071a;cursor:pointer;transition:transform .15s,box-shadow .15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(240,165,0,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+    Close
+  </button>
+
+</div>
+</div>
+
+</body>
+</html>
